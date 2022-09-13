@@ -1,0 +1,32 @@
+.contador-container{
+	box-sizing: border-box;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	height: 60vh;
+	position: relative;
+
+	section {
+		margin: 0 .5rem;
+		height: 100%;
+		main{
+			flex-direction: row;
+			height: 100%;
+			display: flex;
+			align-items: flex-end;
+			div{
+				background-color: aqua;
+				margin: 0 .1rem;
+				display: flex;
+				width: 5rem;
+				justify-content: center;
+				align-items: flex-end;
+			}
+		}
+	}
+	.contador-nome{
+		height: 3rem;
+		text-align: center;
+		width: 10rem;
+	}
+}

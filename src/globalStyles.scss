@@ -1,0 +1,93 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+*{
+  box-sizing: border-box;
+}
+
+.global-container{
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: black;
+  background-image: url('./assets/bg.jpg');
+	background-size: fill;
+	background-repeat: repeat;
+	width: 100vw;
+  height: 100vh;
+  color: white;
+  text-shadow: 0 0 3px #000, 0 0 5px #fff;
+  // text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+  font-size: large;
+	z-index: -10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+button{
+	margin-top: .5rem;
+	padding: .2rem;
+}
+.p1animation {
+  animation: flickerAnimation 5s ease infinite;
+}
+.p2animation {
+  animation: flickerAnimation 4s ease infinite alternate-reverse;
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity:1;transform: translate(0,  0px); }
+  1%   { opacity:0; }
+  2%   { opacity:1; }
+  21%   { opacity:1; transform: translate(5px, 15px);}
+  22%   { opacity:0; }
+  23%   { opacity:1; transform: translate(0,  0px);}
+  40%  { opacity:1; }
+  41%  { opacity:0; }
+  42%  { opacity:1; }
+  43%  { opacity:0; transform: translate(3px, 15px);}
+  44%  { opacity:1; }
+  45%  { opacity:0; }
+  46%  { opacity:1; }
+  100% { opacity:1; transform: translate(-3px, -0px); }
+
+}
+
