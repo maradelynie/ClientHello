@@ -17,6 +17,7 @@ server.on('connection', socket => {
 
   parser.on('data', data =>{
     socket.emit('data', data)
+    console.log(data)
   });
 
   socket.on('disconnect', () => {

@@ -26,7 +26,7 @@ function ModalCadastro({setP1Name, setP2Name, open, close, handleStart}:ModalCad
         <input type="text" placeholder='Player 1' required value={p1} onChange={(e)=>setP1(e.target.value)}/>
         <input type="text" placeholder='Player 2' required value={p2} onChange={(e)=>setP2(e.target.value)}/>
         <div  className="modalCadastro-submit">
-          <button onClick={close}>Cancelar</button>
+          <button className="danger" onClick={close}>Cancelar</button>
           <button type='submit'>Cadastrar</button>
         </div>
        

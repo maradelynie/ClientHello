@@ -5,6 +5,46 @@
 	align-items: center;
 	height: 60vh;
 	position: relative;
+		.contador-p1 .contador-bar{
+			animation: neon1 1.5s ease-in-out infinite alternate;
+			background-color: #fff;
+			color: black;
+		}
+
+		.distance{
+			z-index: 5;
+		}
+
+		.front{
+			z-index: 10;
+		}
+
+		.contador-p2 .contador-bar{
+			animation: neon2 1.5s ease-in-out infinite alternate;
+			background-color: #fff;
+			color: black;
+
+		}
+		@keyframes neon2 {
+			from {
+				box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de,
+					0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+			}
+			to {
+				box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de,
+					0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+			}
+		}
+		@keyframes neon1 {
+			from {
+				box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #b6ff00,
+					0 0 70px #b6ff00, 0 0 80px #b6ff00, 0 0 100px #b6ff00, 0 0 150px #b6ff00;
+			}
+			to {
+				box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #b6ff00,
+					0 0 35px #b6ff00, 0 0 40px #b6ff00, 0 0 50px #b6ff00, 0 0 75px #b6ff00;
+			}
+		}
 
 	section {
 		margin: 0 .5rem;

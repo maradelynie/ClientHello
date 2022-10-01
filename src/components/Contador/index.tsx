@@ -22,6 +22,7 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
   const [meterP2, setMeterP2] = useState(0)
   const [speedP1, setSpeedP1] = useState(0)
   const [speedP2, setSpeedP2] = useState(0)
+  const [p1Winning, setP1Winning] = useState(false)
 
   const [winner, setWinner] = useState('')
 
@@ -52,9 +53,13 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
     const p2Distance = showDistance(p2Pulse)
     const p1Speed = showSpeed(p1Pulse)
     const p2Speed = showSpeed(p2Pulse)
+
+    if(p1Distance>p2Distance){
+      setP1Winning(true)
+    }else setP1Winning(false)
     
     if(p1Distance>=TOTALDIST){
-      return startWin(p1)
+      return startWin(p1, )
     }else if (p2Distance>=TOTALDIST){
       return startWin(p2)
     }else if(actualTime){
@@ -74,15 +79,15 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
 
   return (
     <div className="contador-container">
-      <ModalWin player={winner} open={!!winner} close={closeWinner}/>
+      <ModalWin player={winner} open={!!winner} close={closeWinner} actualTime={actualTime}/>
       {p1 && p2 ?
         <>
           <section className="contador-p1">
             <main>
-              <div style={{height:`${showPercentage(100,speedP1)}%`}}>
+              <div className="contador-bar" style={{height:`${showPercentage(100,speedP1)}%`}}>
                 {speedP1}km/h
               </div>
-              <div style={{height:`${showPercentage(TOTALDIST,meterP1)}%`}}>
+              <div className={ p1Winning?"contador-bar distance front":"contador-bar distance"} style={{height:`${showPercentage(TOTALDIST,meterP1)}%`}}>
                 {meterP1}m
               </div>
             </main>
@@ -91,12 +96,12 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
             </div>
           </section>
 
-          <section className="contador-p1">
+          <section className="contador-p2">
             <main>
-              <div style={{height:`${showPercentage(TOTALDIST,meterP2)}%`}}>
+              <div className="contador-bar distance" style={{height:`${showPercentage(TOTALDIST,meterP2)}%`}}>
                 {meterP2}m
               </div>
-              <div style={{height:`${showPercentage(100,speedP2)}%`}}>
+              <div className="contador-bar" style={{height:`${showPercentage(100,speedP2)}%`}}>
                 {speedP2}km/h
               </div>
 

@@ -44,6 +44,73 @@ table {
 *{
   box-sizing: border-box;
 }
+input {
+  margin: .3rem 0;
+  border: none;
+  background-color: transparent;
+  text-shadow: 0 0 3px #000, 0 0 5px #fff;
+  color: white;
+  padding: 1rem;
+  &::placeholder{
+    color: rgba(255, 255, 255, 0.664);
+  }
+  border-bottom: solid 2px white;
+  outline: none;
+  &:focus{
+    box-shadow: 0 0 .2rem #fff,
+    inset 0 0 1.3rem rgb(4, 250, 254); 
+  }
+  
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  font-weight: bolder;
+  padding: 1rem;
+	margin-top: .5rem;
+  transition: .2s;
+  text-transform: lowercase;
+  border-radius: 2rem;
+  animation: pulse-blue 2s infinite;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgb(4, 250, 254);
+
+  &.danger{
+    color: rgb(177, 0, 0);
+    animation: pulse-red 2s infinite;
+  }
+    
+  }
+  @keyframes pulse-red {
+    0% {
+      box-shadow: 0 0 10px rgba(255, 83, 83, 0.7);
+    }
+    
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+    
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+  }
+  @keyframes pulse-blue {
+    0% {
+      box-shadow: 0 0 10px rgba(83, 244, 255, 0.7);
+    }
+    
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+    
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+  }
+  
+  
+ 
 
 .global-container{
 		font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -62,10 +129,7 @@ table {
 	justify-content: center;
 	align-items: center;
 }
-button{
-	margin-top: .5rem;
-	padding: .2rem;
-}
+
 .p1animation {
   animation: flickerAnimation 5s ease infinite;
 }

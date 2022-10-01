@@ -101,6 +101,7 @@ function Home() {
       const socket = io(APIURLSOCKET, { transports: ["websocket", "polling"] });
 
       socket.on("data", (data) => {
+        console.log(data)
         if(startTimer){
           if(data.includes('P1')){
             setP1Pulse(pulse=>pulse+1)
