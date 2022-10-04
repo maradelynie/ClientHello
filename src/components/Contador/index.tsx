@@ -59,7 +59,7 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
     }else setP1Winning(false)
     
     if(p1Distance>=TOTALDIST){
-      return startWin(p1, )
+      return startWin(p1)
     }else if (p2Distance>=TOTALDIST){
       return startWin(p2)
     }else if(actualTime){
