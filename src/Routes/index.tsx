@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from '../Views/Home/Index'
 import Login from '../Views/Login/Index'
+import Tournament from "../Views/Tournament/Index";
 
 interface route {
   page: ReactNode;
@@ -16,6 +17,7 @@ const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home/>} />
+      <Route path="/tournament/:id" element={<Tournament/>} />
       {/* <Route path="/login" element={<Login/>} /> */}
     </Routes>
   </BrowserRouter>

@@ -1,0 +1,33 @@
+.modalJogador-container{
+	top:0;
+	right: 0;
+	position: fixed;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.9);
+	height: 100vh;
+	width: 100vw;
+	form{
+		display: flex;
+		flex-direction: column;
+		gap:.2rem;
+		div{
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap:1rem;
+			label{
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+	.modalCadastro-submit{
+		margin-top: 1rem;
+		display: flex;
+		justify-content: center;
+		button{
+			width: 100%;
+		}
+	}
+}

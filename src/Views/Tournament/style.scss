@@ -1,0 +1,46 @@
+.tournament_container{	
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+	header{
+		display: flex;
+		justify-content: space-between;
+		nav{
+			display: flex;
+			justify-content: end;
+			gap: 1rem;
+		}
+	}
+	main{
+		display: flex;
+		gap:1rem;
+		ul{
+			width: 100%;
+			min-width: 20rem;
+			transition: .2s;
+			h3{
+				margin-bottom: 2rem;
+			}
+			li h3{
+				display: flex;
+				justify-content: space-between;
+				margin: 0;
+			}
+			li:hover{
+				filter: brightness(.7);
+			}
+			li:active{
+				filter: brightness(1);
+			}
+			li .icon:hover{
+				color:red;
+			}
+			li{
+			cursor: pointer;
+
+			}
+		}
+		
+	}
+}

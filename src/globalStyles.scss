@@ -60,10 +60,20 @@ input {
     box-shadow: 0 0 .2rem #fff,
     inset 0 0 1.3rem rgb(4, 250, 254); 
   }
+  &:disabled{
+    box-shadow: 0 0 .2rem #fff,
+    inset 0 0 1.3rem rgb(150, 150, 150); 
+
+  }
   
 }
+h1{
+  font-size: 5rem;
+  padding-bottom: 2rem;
+  border-bottom: solid 3px white ;
+}
 
-button {
+button, .button {
   cursor: pointer;
   border: 0;
   font-weight: bolder;
@@ -109,8 +119,32 @@ button {
     }
   }
   
-  
- 
+  .card{
+    padding: 1rem;
+		background-color: rgba(0, 0, 0, 0.5);
+		border: 1px white solid;
+		margin: .5rem 0;
+  }
+  .home_card_tournament{
+    @extend .card;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		cursor: pointer;
+		&:active{
+			filter: brightness(.5);
+		}
+		span{
+			font-size: x-small;
+		}
+		section{
+			margin: auto 0;
+				}
+
+		&:hover{
+			box-shadow: 0 0 10px rgb(4, 250, 254);
+		}
+	}
 
 .global-container{
 		font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -119,13 +153,14 @@ button {
 	background-size: fill;
 	background-repeat: repeat;
 	width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
   text-shadow: 0 0 3px #000, 0 0 5px #fff;
   // text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
   font-size: large;
 	z-index: -10;
 	display: flex;
+  flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }

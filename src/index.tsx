@@ -10,6 +10,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className='global-container'>
+      <h1>Hell.O</h1>
       <Routes />
     </div>
   </React.StrictMode>
