@@ -9,6 +9,8 @@ type ModalDeleteJogadorType = {
   open: boolean,
   edit?:boolean,
   player: jogadorType ,
+  setBackdropStatus: (status:boolean)=>void
+  setMessageStatus:(message:string)=>void
 }
 type jogadorType = {
   key:string,
@@ -20,14 +22,20 @@ type jogadorType = {
   victories: number ,
   wos: number 
 }
-function ModalDeleteJogador({ open, close, player, getTournament}:ModalDeleteJogadorType) {
+function ModalDeleteJogador({ open, close, player, getTournament,setBackdropStatus,setMessageStatus}:ModalDeleteJogadorType) {
   const {id} = useParams()
   const handleDelete = async (e:React.MouseEvent) => {
-    if(getTournament){
       e.preventDefault()
-      await api.deletePlayer({key:player.key},id||'')
-      getTournament()
-      close()
+      if(getTournament){
+      try{
+        setBackdropStatus(true)
+        await api.deletePlayer({key:player.key},id||'')
+        getTournament()
+        close()
+      }catch{
+        setMessageStatus("Erro ao deletar jogador")
+      }
+      
     }
   }
   if(open) {return (
@@ -37,7 +45,7 @@ function ModalDeleteJogador({ open, close, player, getTournament}:ModalDeleteJog
         <span>Após deletar o jogador não será possivel reaver os dados,</span><span> tem certeza que deseja continuar?</span>
           <div  className="modalCadastro-submit">
             <button className="danger" onClick={close}>cancelar</button>
-            <button onClick={e=>handleDelete(e)}>salvar</button>
+            <button onClick={e=>handleDelete(e)}>Sim</button>
           </div>
       </form>
     </div>

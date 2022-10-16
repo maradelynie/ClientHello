@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import ModalCadastroJogador from "../../components/ModalCadastroJogador";
 import ModalJogador from "../../components/ModalJogador";
 import ModalDeleteJogador from "../../components/ModalDeleteJogador";
+import Backdrop from "../../components/backdrop";
+import Alert from "../../components/alert";
 
 type TournamentType = {
   id: number, name: string, date: string, racers: ReacersType[]
@@ -24,15 +26,25 @@ type ReacersType = {
 
 function Tournament() {
   const {id} = useParams()
+  const [backdropStatus, setBackdropStatus] = useState(true);
   const [tournament, setTournament] = useState<TournamentType|''>('');
   const [viewPlayerData, setViewPlayerData] = useState<ReacersType|''>('');
   const [editPlayerData, setEditPlayerData] = useState<ReacersType|''>('');
   const [deletePlayerData, setDeletePlayerData] = useState<ReacersType|''>('');
   const [modalCadastroJogador, setModalCadastroJogador] = useState(false);
+  const [messageStatus, setMessageStatus] = useState('');
 
   const getTournament = async () => {
+    try{
+    setBackdropStatus(true)
     const tournament = await api.getTorunament(id||'')
     setTournament(tournament)
+  }catch{
+    setMessageStatus("Erro ao carregar torneios")
+  }finally{
+    setBackdropStatus(false)
+  }
+    
   }
 
   const handleEdit = (e:React.MouseEvent<SVGElement, MouseEvent>,player:ReacersType) => {
@@ -51,6 +63,8 @@ function Tournament() {
 
   return (
     <div className="tournament_container">
+      <Alert open={!!messageStatus} close={()=>setMessageStatus('')} message={messageStatus}/>
+      <Backdrop open={backdropStatus}/>
       {tournament?
       <>
       {!!deletePlayerData ?
@@ -59,6 +73,8 @@ function Tournament() {
           close={() => setDeletePlayerData('')}
           player={deletePlayerData}
           getTournament={getTournament}
+          setBackdropStatus={setBackdropStatus}
+          setMessageStatus={setMessageStatus}
         />:<></>}
       {!!editPlayerData ?
           <ModalJogador
@@ -67,7 +83,9 @@ function Tournament() {
           player={editPlayerData}
           edit={true}
           getTournament={getTournament}
-        />:<></>}
+          setBackdropStatus={setBackdropStatus}
+          setMessageStatus={setMessageStatus}
+          />:<></>}
       {!!viewPlayerData ?
           <ModalJogador
           open={!!viewPlayerData}
@@ -79,10 +97,12 @@ function Tournament() {
           open={modalCadastroJogador}
           close={() => setModalCadastroJogador(false)}
           tournamentId={id||''}
+          setBackdropStatus={setBackdropStatus}
           getTournament={getTournament}
-        />:<></>}
+          setMessageStatus={setMessageStatus}
+          />:<></>}
       <header>
-        <section>
+        <section className="small">
           <h2>{tournament.name}</h2>
           <span>{new Date(tournament.date).toLocaleDateString()}</span>
         </section>
@@ -97,21 +117,21 @@ function Tournament() {
         <h3>Sem gênero</h3>
           {tournament.racers.map(player=>{
             if(player.category!=='sem') return ''
-            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h3>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h3><hr></hr></li>
+            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h5>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h5><hr></hr></li>
           })}
         </ul>
         <ul className="card">
         <h3>Feminino</h3>
           {tournament.racers.map(player=>{
             if(player.category!=='fem') return ''
-            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h3>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h3><hr></hr></li>
+            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h5>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h5><hr></hr></li>
           })}
         </ul>
         <ul className="card">
         <h3>Masculino</h3>
           {tournament.racers.map(player=>{
             if(player.category!=='mas') return ''
-            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h3>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h3><hr></hr></li>
+            return <li key={player.key} onClick={()=>setViewPlayerData(player)}><h5>{player.name} <nav><Trash  onClick={(e)=>handleDelete(e,player)} className="icon"/> <Edit onClick={(e)=>handleEdit(e,player)}className="icon" /></nav></h5><hr></hr></li>
           })}
         </ul>
       </>:<></>}

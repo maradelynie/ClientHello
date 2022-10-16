@@ -12,7 +12,9 @@ type ModalJogadorType = {
   getTournament?: () => void,
   open: boolean,
   player: jogadorType ,
-  edit?:boolean
+  edit?:boolean,
+  setBackdropStatus?: (status:boolean)=>void,
+  setMessageStatus?: (message:string)=>void
 }
 type jogadorType = {
   name: string,
@@ -23,15 +25,20 @@ type jogadorType = {
   victories: number ,
   wos: number 
 }
-function ModalJogador({ open, close, player, edit, getTournament}:ModalJogadorType) {
+function ModalJogador({ open, close, player, edit, getTournament,setBackdropStatus,setMessageStatus}:ModalJogadorType) {
   const {id} = useParams()
   const [playerData, setPlayerData] = useState(player)
   const handleSave = async (e:React.MouseEvent) => {
-    if(getTournament){
-      e.preventDefault()
-      await api.putPlayer(playerData,id||'')
-      getTournament()
-      close()
+    e.preventDefault()
+    if(getTournament&&setBackdropStatus&&setMessageStatus){
+      try{
+        setBackdropStatus(true)
+        await api.putPlayer(playerData,id||'')
+        getTournament()
+        close()
+      }catch{
+        setMessageStatus("Erro ao editar jogador")
+      }
     }
   }
   if(open) {return (

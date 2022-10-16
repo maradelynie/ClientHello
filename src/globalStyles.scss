@@ -72,8 +72,16 @@ h1{
   padding-bottom: 2rem;
   border-bottom: solid 3px white ;
 }
-
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
 button, .button {
+  white-space: nowrap;
   cursor: pointer;
   border: 0;
   font-weight: bolder;
@@ -118,8 +126,11 @@ button, .button {
       box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
     }
   }
-  
+  .small{
+			& span{font-size: x-small;}
+  }
   .card{
+    @extend .small;
     padding: 1rem;
 		background-color: rgba(0, 0, 0, 0.5);
 		border: 1px white solid;
@@ -134,9 +145,7 @@ button, .button {
 		&:active{
 			filter: brightness(.5);
 		}
-		span{
-			font-size: x-small;
-		}
+
 		section{
 			margin: auto 0;
 				}

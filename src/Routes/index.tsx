@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Header from "../components/Header";
 import Home from '../Views/Home/Index'
 import Login from '../Views/Login/Index'
 import Tournament from "../Views/Tournament/Index";
@@ -15,6 +16,7 @@ interface route {
 
 const AppRoutes = () => (
   <BrowserRouter>
+      <Header/>
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/tournament/:id" element={<Tournament/>} />

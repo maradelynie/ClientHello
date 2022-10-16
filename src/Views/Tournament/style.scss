@@ -22,10 +22,12 @@
 			h3{
 				margin-bottom: 2rem;
 			}
-			li h3{
+			li h5{
 				display: flex;
 				justify-content: space-between;
 				margin: 0;
+				font-size: small;
+				align-items: center;
 			}
 			li:hover{
 				filter: brightness(.7);

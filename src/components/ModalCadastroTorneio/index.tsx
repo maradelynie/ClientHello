@@ -4,15 +4,24 @@ import './style.scss'
 
 type ModalCadastroTorneioType = {
   close: () => void,
-  open: boolean
+  open: boolean,
+  setBackdropStatus:(status:boolean)=>void,
+  getTournament: ()=>void,
+  setMessageStatus: (message:string)=>void
 }
 
-function ModalCadastroTorneio({ open, close}:ModalCadastroTorneioType) {
+function ModalCadastroTorneio({ open, close, setBackdropStatus, getTournament,setMessageStatus}:ModalCadastroTorneioType) {
   const [name, setName] = useState('')
   const handleSubmit = async ( e:React.SyntheticEvent ) => {
     e.preventDefault()
-    await api.postTorunaments({name:name})
-    close()
+    try{
+      setBackdropStatus(true)
+      await api.postTorunaments({name:name})
+      getTournament()
+      close()
+    }catch{
+      setMessageStatus("Erro ao cadastrar Torneio")
+    }
   }
   if(open) {return (
     <div className="modalCadastroTorneio-container">

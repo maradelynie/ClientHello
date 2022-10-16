@@ -24,18 +24,14 @@ export const login = async ({email, password}:CredentialsType) => {
   const response = await apiConfig.sendWithAxios('token', 'POST',dataSend)
   return response.data
   }catch{
-    console.error("erro ao logar")
+    throw new Error("erro ao logar")
   }
   
 }
 
 export const getTorunaments = async () => {
- try{
   const response = await apiConfig.sendWithAxios('0idmwbdjtq3v4d1lq4o34gd31s54i934', 'GET')
-  return response.data
-  }catch{
-    console.error("erro ao obter torneios")
-  }
+   return response.data
   
 }
 export const getTorunament = async (id:string) => {
@@ -43,7 +39,7 @@ export const getTorunament = async (id:string) => {
    const response = await apiConfig.sendWithAxios('r2mvt1f6wludndkivtq06upimbz97aah', 'GET', null,{tournament:id} )
    return response.data
    }catch{
-     console.error("erro ao obter torneios")
+     throw new Error("erro ao obter torneios")
    }
    
  }
@@ -53,7 +49,7 @@ export const postTorunaments = async (dataTournament:TorneioCreateType) => {
    const response = await apiConfig.sendWithAxios('r2mvt1f6wludndkivtq06upimbz97aah', 'POST',dataTournament)
    return response.data
    }catch{
-     console.error("erro ao criar torneio")
+     throw new Error("erro ao criar torneio")
    }
    
  }
@@ -62,7 +58,7 @@ export const postTorunaments = async (dataTournament:TorneioCreateType) => {
    const response = await apiConfig.sendWithAxios('92lifkj4demkm16tk5jc3vaj78pdmawx', 'POST',{player:dataPlayer}, {tournament:id})
    return response.data
    }catch{
-     console.error("erro ao criar torneio")
+     throw new Error("erro ao criar jogador")
    }
    
  }
@@ -71,7 +67,7 @@ export const postTorunaments = async (dataTournament:TorneioCreateType) => {
    const response = await apiConfig.sendWithAxios('92lifkj4demkm16tk5jc3vaj78pdmawx', 'PUT',{player:dataPlayer}, {tournament:id})
    return response.data
    }catch{
-     console.error("erro ao criar torneio")
+     throw new Error("erro ao atualizar jogador")
    }
    
  }
@@ -80,7 +76,7 @@ export const postTorunaments = async (dataTournament:TorneioCreateType) => {
    const response = await apiConfig.sendWithAxios('92lifkj4demkm16tk5jc3vaj78pdmawx?player='+dataPlayer.key, 'DELETE',null, {tournament:id})
    return response.data
    }catch{
-     console.error("erro ao criar torneio")
+     throw new Error("erro ao deletar jogador")
    }
    
  }
@@ -90,7 +86,7 @@ export const connect = async () => {
   const response = await apiConfig.sendWithAxios('serialPort', 'GET')
   return response.data
   }catch{
-    console.error("erro ao logar")
+    throw new Error("erro ao logar")
   }
   
 }

@@ -5,16 +5,27 @@
 	position: relative;
 	section{
 		margin-top: 2rem;
-		display:flex;
-	justify-content: center;
-	flex-direction: column;
-	position: relative;
-
+		display:grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		justify-content: center;
+		flex-direction: column;
+		position: relative;
+		gap:1rem;
+	}
+	.home_card_tournament{
+		section{
+			display: flex;
+			justify-content: center;
+			gap: 0;
+		}
 	}
 	header{
+		display: flex;
 		input{
 			margin-right: 1rem;
+			width: 100%;
 		}
+		
 	}
 	
 }

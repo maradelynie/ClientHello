@@ -6,17 +6,25 @@ type ModalCadastroJogadorType = {
   close: () => void,
   getTournament: () => void,
   open: boolean,
-  tournamentId: string 
+  tournamentId: string ,
+  setBackdropStatus: (status:boolean)=>void,
+  setMessageStatus:(message:string)=>void
 }
 
-function ModalCadastroJogador({ open, close, tournamentId,getTournament}:ModalCadastroJogadorType) {
+function ModalCadastroJogador({ open, close, tournamentId,getTournament,setBackdropStatus,setMessageStatus}:ModalCadastroJogadorType) {
   const [name, setName] = useState('')
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState('sem')
   const handleSubmit = async ( e:React.SyntheticEvent ) => {
     e.preventDefault()
-    await api.postPlayer({name:name, category},tournamentId)
-    getTournament()
-    close()
+    try{
+      setBackdropStatus(true)
+      await api.postPlayer({name:name, category},tournamentId)
+      getTournament()
+      close()
+    }catch{
+      setMessageStatus("Erro ao cadastrar jogador")
+    }
+
   }
   if(open) {return (
     <div className="modalCadastroJogador-container">
