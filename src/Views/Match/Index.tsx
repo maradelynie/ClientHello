@@ -1,6 +1,6 @@
 import "./style.scss";
-import p1 from "../../assets/p1.png";
-import p2 from "../../assets/p2.png";
+import p1 from "../../assets/p12.png";
+import p2 from "../../assets/p22.png";
 import * as api from '../../sevices'
 import Contador from "../../components/Contador";
 import { useEffect, useState } from "react";

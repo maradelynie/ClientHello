@@ -44,19 +44,18 @@ function Tournament() {
   
   const getTournament = async () => {
     try{
-    setBackdropStatus(true)
-    const tournament = await api.getTorunament(id||'')
-    setTournament(tournament)
-    setupPlayers(tournament.racers)
-    setSemPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='sem'))
-    setFemPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='fem'))
-    setMascPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='mas'))
-  }catch{
-    setMessageStatus("Erro ao carregar torneios")
-  }finally{
-    setBackdropStatus(false)
-  }
-    
+      setBackdropStatus(true)
+      const tournament = await api.getTorunament(id||'')
+      setTournament(tournament)
+      setupPlayers(tournament.racers)
+      setSemPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='sem'))
+      setFemPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='fem'))
+      setMascPlayers(tournament.racers.filter((player:ReacersType)=>player.category==='mas'))
+    }catch{
+      setMessageStatus("Erro ao carregar torneios")
+    }finally{
+      setBackdropStatus(false)
+    }
   }
   const handleGotToTOurnament = async (category:string, players:ReacersType[]) =>{
     if(players.length>1){
@@ -71,7 +70,6 @@ function Tournament() {
       }
     }else setMessageStatus("Adicione mais jogadores ao torneio")
   }
-
   const handleEdit = (e:React.MouseEvent<SVGElement, MouseEvent>,player:ReacersType) => {
     e.stopPropagation()
     setEditPlayerData(player)
@@ -84,7 +82,7 @@ function Tournament() {
     try{
       setBackdropStatus(true)
       await api.deletTorunaments(id||'')
-      navigate('/')
+      navigate('/load')
     }catch{
       setMessageStatus("Erro ao deletar torneios")
     }finally{
@@ -95,7 +93,6 @@ function Tournament() {
     getTournament()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <div className="tournament_container">

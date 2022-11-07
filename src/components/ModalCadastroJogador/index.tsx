@@ -28,8 +28,8 @@ function ModalCadastroJogador({ open, close, tournamentId,getTournament,setBackd
   }
   if(open) {return (
     <div className="modalCadastroJogador-container">
-      <form onSubmit={handleSubmit}>
         <h3>Cadastre o jogador</h3>
+      <form onSubmit={handleSubmit}>
         <input type="text" placeholder='Nome' required value={name} onChange={(e)=>setName(e.target.value)}/>
         <select required value={category} onChange={e=>setCategory(e.target.value)}>
           <option value="sem">Sem Gênero</option>
