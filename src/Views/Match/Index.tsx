@@ -37,7 +37,6 @@ function Home() {
   const [p1Pulse, setP1Pulse] = useState(0);
   const [playerB, setPlayerB] = useState<RacerType|''>("");
   const [p2Pulse, setP2Pulse] = useState(0);
-  const [ready, setReady] = useState(false);
   const [countDown, setCountDown] = useState(3);
   const [showCountDown, setShowCountDown] = useState(false);
 
@@ -49,7 +48,6 @@ function Home() {
     setP1Pulse(0)
     setActualTime(0);
     setStartTimer(false);
-    setReady(false);
     setModalStart(true)
   };
 
@@ -90,13 +88,10 @@ function Home() {
 
     await startCountDown();
     startGame();
-  };
-
+  }
   const startGame = () => {
     setStartTimer(true);
-    setReady(true);
-  };
-
+  }
   const showTimer = (time: number) => {
     return (
       <>
@@ -111,7 +106,7 @@ function Home() {
         </span>
       </>
     );
-  };
+  }
   const handleFinishMatch = async (playerA:RacerType, playerB:RacerType, winner:string) => {
     try{
       setBackdropStatus(true)
@@ -206,7 +201,7 @@ function Home() {
       setPlayerB(match.runnerB)
       setModalStart(true)
     }else navigate('/')
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

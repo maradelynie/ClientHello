@@ -93,6 +93,7 @@ function Tournament() {
   }
   useEffect(() => {
     getTournament()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

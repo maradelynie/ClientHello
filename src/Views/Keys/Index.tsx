@@ -39,12 +39,12 @@ type RacerType = {
 function Tournament() {
   const {id} = useParams()
   const {category} = useParams()
-  const {setupMatch} = useMatch()
+  const {setupMatch, players} = useMatch()
   const navigate = useNavigate();
   const [backdropStatus, setBackdropStatus] = useState(true);
   const [tournament, setTournament] = useState<TournamentType|''>('');
   const [races, setRaces] = useState<MatchsType[]|[]>([]);
-  const [players, setPlayers] = useState<RacerType[]|[]>([]);
+  const [playersData, setPlayers] = useState<RacerType[]|[]>([]);
   const [messageStatus, setMessageStatus] = useState('');
   const [viewPlayerData, setViewPlayerData] = useState<RacerType|''>('');
 
@@ -70,6 +70,7 @@ function Tournament() {
       const racers = allRaces[1].reduce((add:string[],race:RaceType)=>{
         return [...add,race.runnerA,race.runnerB ]
       },[])
+
       const allPlayers = await Promise.all( racers.map( async (racer:string) => {
               if(!racer) return ''
               const dados = await api.getRacer(racer||'',id||'')
@@ -103,6 +104,7 @@ function Tournament() {
 
   useEffect(() => {
     getTournament()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -124,8 +126,8 @@ function Tournament() {
             <div  className="key_tournament_index">
               {race.map((match, indexMatch)=>{
                 const matchData = races[index]
-                const playerA = players.find(player=>matchData[indexMatch].runnerA===player.id)
-                const playerB = players.find(player=>matchData[indexMatch].runnerB===player.id)
+                const playerA = playersData.find(player=>matchData[indexMatch].runnerA===player.id)
+                const playerB = playersData.find(player=>matchData[indexMatch].runnerB===player.id)
                 const done = !!matchData[indexMatch].winner
                 return (
                   <div key={indexMatch+'-'+tournament.category} className={done?"key_card_tournament done":"key_card_tournament"}>
