@@ -1,20 +1,41 @@
 import "./style.scss";
 import p1 from "../../assets/p1.png";
 import p2 from "../../assets/p2.png";
+import * as api from '../../sevices'
 import Contador from "../../components/Contador";
 import { useEffect, useState } from "react";
-import ModalCadastro from "../../components/ModalCadastro/index";
+import ModalStart from "../../components/ModalStart/index";
 import ModalCount from "../../components/ModalCount/index";
 import { io } from "socket.io-client";
+import { useMatch } from "../../hooks/useMatch";
+import { useNavigate } from "react-router-dom";
+import Backdrop from "../../components/backdrop";
+import Alert from "../../components/alert";
 
 const APIURLSOCKET =
   process.env.REACT_APP_APIURLSOCKET || "http://localhost:3008";
 
+type RacerType = {
+    id: string|null,
+    name: string,
+    average_speed: number,
+    wos: number,
+    times_played: number,
+    victories: number,
+    category: string,
+    tournament: string,
+    dead: boolean,
+    key?:string
+  }
 function Home() {
-  const [modalCadastro, setModalCadastro] = useState(false);
-  const [p1Name, setP1Name] = useState("");
+  const [modalStart, setModalStart] = useState(false);
+  const [backdropStatus, setBackdropStatus] = useState(false);
+  const [messageStatus, setMessageStatus] = useState('');
+  const {match} = useMatch()
+  const navigate = useNavigate();
+  const [playerA, setPlayerA] = useState<RacerType|''>("");
   const [p1Pulse, setP1Pulse] = useState(0);
-  const [p2Name, setP2Name] = useState("");
+  const [playerB, setPlayerB] = useState<RacerType|''>("");
   const [p2Pulse, setP2Pulse] = useState(0);
   const [ready, setReady] = useState(false);
   const [countDown, setCountDown] = useState(3);
@@ -29,10 +50,22 @@ function Home() {
     setActualTime(0);
     setStartTimer(false);
     setReady(false);
-    setP1Name("");
-    setP2Name("");
-
+    setModalStart(true)
   };
+
+  const handleCancelStart = () => {
+    navigate(-1)
+  }
+
+  const handleInvert = () => {
+    if(playerB&&playerA){
+      const newPlayerA = {...playerB}
+      const newPlayerB = {...playerA}
+  
+      setPlayerA(newPlayerA)
+      setPlayerB(newPlayerB)
+    }
+  }
 
   const startCountDown = async () =>
     await new Promise<void>((resolve, reject) => {
@@ -52,6 +85,7 @@ function Home() {
     });
 
   const handleStart = async () => {
+    setModalStart(false)
     setShowCountDown(true);
 
     await startCountDown();
@@ -78,6 +112,52 @@ function Home() {
       </>
     );
   };
+  const handleFinishMatch = async (playerA:RacerType, playerB:RacerType, winner:string) => {
+    try{
+      setBackdropStatus(true)
+      if(match){
+        const raceData = {
+          key:match.id,
+          winner,
+          runnerA:playerA.key,
+          runnerB:playerB.key,
+          category:match.category
+        }
+        await api.putPlayers([playerA,playerB], match.tournament)
+        await api.putRace(raceData, match.tournament)
+        navigate(-1)
+      }
+      
+      // const allRaces = await Promise.all(tournamentKeys.graph.map(async (races:string[]) => {
+      //   if(races.length){
+      //     return await Promise.all( races.map( async (race:string) => {
+      //         if(!race) return ''
+      //         const dados = await api.getRace(race||'',id||'') 
+      //         if(!dados.runnerB) return {...dados, id:race, winner:dados.runnerA}
+      //         return {...dados, id:race}
+      //       }))
+      //   }
+      //   return ''
+      //   }))
+      // const racers = allRaces[1].reduce((add:string[],race:RaceType)=>{
+      //   return [...add,race.runnerA,race.runnerB ]
+      // },[])
+      // const allPlayers = await Promise.all( racers.map( async (racer:string) => {
+      //         if(!racer) return ''
+      //         const dados = await api.getRacer(racer||'',id||'')
+      //         return{ ...dados, id:racer }
+      //       }
+      //     )
+      //   )
+      // setPlayers(allPlayers)
+      // setRaces(allRaces)
+      // setTournament(tournamentKeys)
+    }catch{
+      setMessageStatus("Erro ao carregar chaves")
+    }finally{
+      setBackdropStatus(false)
+    }
+  }
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
@@ -120,32 +200,41 @@ function Home() {
     }
   }, [startTimer]);
 
+  useEffect(() => {
+    if(match){
+      setPlayerA(match.runnerA)
+      setPlayerB(match.runnerB)
+      setModalStart(true)
+    }else navigate('/')
+
+  }, []);
+
   return (
     <>
+      <Alert open={!!messageStatus} close={()=>setMessageStatus('')} message={messageStatus}/>
+      <Backdrop open={backdropStatus}/>
       <span className="home-background-players">
         <img alt="imagem player 1" className="p1animation" src={p1} />
         <img alt="imagem player 2" className="p2animation" src={p2} />
       </span>
       <div className="home-container">
         <section>
-          <h1>Hell.O</h1>
-          <Contador p1={p1Name} p2={p2Name} p1Pulse={p1Pulse} p2Pulse={p2Pulse} handleRestart={handleRestart} setStartTimer={setStartTimer} actualTime={actualTime}/>
+          {playerA && playerB && 
+            <Contador handleFinishMatch={handleFinishMatch} p1={playerA} p2={playerB} p1Pulse={p1Pulse} p2Pulse={p2Pulse} setStartTimer={setStartTimer} handleRestart={handleRestart} actualTime={actualTime}/>
+          }
           <h3>{showTimer(actualTime)}</h3>
-          {ready || showCountDown ? (
-            <>
-              <button onClick={() => handleRestart()}>Reiniciar</button>
-            </>
-          ) : (
-            <button onClick={() => setModalCadastro(true)}>Nova Partida</button>
-          )}
+         
+          <button className="danger" onClick={handleRestart}>Reiniciar</button>
+
         </section>
         <ModalCount open={showCountDown} countDown={countDown} />
-        <ModalCadastro
-          open={modalCadastro}
-          close={() => setModalCadastro(false)}
-          setP1Name={setP1Name}
-          setP2Name={setP2Name}
+        <ModalStart
+          open={modalStart}
+          close={handleCancelStart}
+          playerA={playerA}
+          playerB={playerB}
           handleStart={handleStart}
+          invert={handleInvert}
         />
       </div>
     </>

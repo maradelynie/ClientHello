@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as api from '../../sevices'
-import './style.scss'
 
 type ModalDeleteJogadorType = {
   close: () => void,

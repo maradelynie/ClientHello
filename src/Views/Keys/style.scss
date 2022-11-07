@@ -1,0 +1,38 @@
+.keys_container{	
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+	.key_card_tournament{
+		margin: 1rem;
+		display: flex;
+		align-items: revert;
+		
+	}
+	.key_tournament_index{
+		width: 100%;
+	}
+	.key_tournament{
+		margin: 1rem;
+		display: flex;
+		align-items: center;
+		.key_tournament_index{
+			border-left: .3rem solid white;
+			margin-left: 1rem;
+			.card{
+				display: flex;
+				align-items: center;
+				margin-left: 1rem;
+			}
+			.done{
+				.card{
+					opacity: .5;
+				}
+				.winner{
+					opacity: 1;
+				}
+			}
+			
+		}
+	}
+}

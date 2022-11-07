@@ -1,14 +1,26 @@
 import {useEffect,useState} from 'react'
 import ModalWin from '../ModalWin';
 import './style.scss'
+type RacerType = {
+  id: string|null,
+  name: string,
+  average_speed: number,
+  wos: number,
+  times_played: number,
+  victories: number,
+  category: string,
+  tournament: string,
+  dead: boolean,
+}
 type ContadorType = {
-  p1: string,
-  p2: string,
+  p1: RacerType,
+  p2: RacerType,
   p1Pulse: number,
   p2Pulse: number,
   actualTime: number,
   handleRestart: ()=>void,
-  setStartTimer: (status:boolean)=>void
+  setStartTimer: (status:boolean)=>void,
+  handleFinishMatch: (p1:RacerType,p2:RacerType,winner:string) => void
 }
 const TIRESIZE =
   process.env.REACT_APP_TIRESIZE || 2096;
@@ -16,15 +28,16 @@ const TIRESIZE =
   const TOTALDIST =
   Number(process.env.REACT_APP_TOTALDIST || 500)
 
-
-function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actualTime}:ContadorType) {
+ 
+function Contador({p1, p2, p1Pulse, p2Pulse, setStartTimer, actualTime, handleRestart,handleFinishMatch}:ContadorType) {
   const [meterP1, setMeterP1] = useState(0)
   const [meterP2, setMeterP2] = useState(0)
   const [speedP1, setSpeedP1] = useState(0)
   const [speedP2, setSpeedP2] = useState(0)
   const [p1Winning, setP1Winning] = useState(false)
 
-  const [winner, setWinner] = useState('')
+  const [winner, setWinner] = useState<RacerType|''>('')
+  const [winnerSpeed, setWinnerSpeed] = useState(0)
 
   const showDistance = (pulse:number) => {
     const meter = (pulse*Number(TIRESIZE))/1000
@@ -39,15 +52,37 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
     const hour = actualTime/3600000
     return Math.round(dist/hour||0.001)
   }
-
-  const startWin = (player:string) => {
+  const startWin = (player:RacerType) => {
     setWinner(player)
     setStartTimer(false)
   }
   const closeWinner = () => {
     setWinner('')
-    handleRestart()
   }
+  const handleSave = () => {
+    if(winner){
+      const newPlayerA = {
+        ...p1,
+        id:null,
+        key:p1.id,
+        times_played: p1.times_played+1,
+        average_speed: p1.average_speed>speedP1?p1.average_speed:speedP1,
+        victories: p1.id===winner.id?p1.victories+1:p1.victories,
+        dead:p1.id===winner.id?false:true
+      }
+      const newPlayerB = {
+        ...p2,
+        id:null,
+        key:p2.id,
+        times_played: p2.times_played+1,
+        average_speed: p2.average_speed>speedP2?p2.average_speed:speedP2,
+        victories: p2.id===winner.id?p2.victories+1:p2.victories,
+        dead:p2.id===winner.id?false:true
+      }
+      handleFinishMatch(newPlayerA,newPlayerB,winner.id||'')
+    }
+  }
+
   useEffect(() => {
     const p1Distance = showDistance(p1Pulse)
     const p2Distance = showDistance(p2Pulse)
@@ -59,8 +94,10 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
     }else setP1Winning(false)
     
     if(p1Distance>=TOTALDIST){
+      setWinnerSpeed(p1Speed)
       return startWin(p1)
     }else if (p2Distance>=TOTALDIST){
+      setWinnerSpeed(p2Speed)
       return startWin(p2)
     }else if(actualTime){
       setSpeedP1(p1Speed)
@@ -74,12 +111,10 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
       setMeterP2(0)
     }
   }, [p1Pulse,p2Pulse, actualTime])
-  
-
 
   return (
     <div className="contador-container">
-      <ModalWin player={winner} open={!!winner} close={closeWinner} actualTime={actualTime}/>
+      <ModalWin player={winner} winnerSpeed={winnerSpeed} open={!!winner} close={closeWinner} actualTime={actualTime} handleSave={handleSave} handleRestart={handleRestart}/>
       {p1 && p2 ?
         <>
           <section className="contador-p1">
@@ -92,7 +127,7 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
               </div>
             </main>
             <div className='contador-nome'>
-              {p1}
+              {p1.name}
             </div>
           </section>
 
@@ -107,7 +142,7 @@ function Contador({p1, p2, p1Pulse, p2Pulse, handleRestart, setStartTimer, actua
 
             </main>
             <div className='contador-nome'>
-              {p2}
+              {p2.name}
             </div>
           </section>
         </>

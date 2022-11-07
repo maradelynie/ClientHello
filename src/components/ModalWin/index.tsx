@@ -1,33 +1,52 @@
 import './style.scss'
 
 type ModalWinType = {
-  player: string,
+  player: RacerType|'',
+  winnerSpeed: number;
   open: boolean,
   actualTime: number,
-  close: ()=>void
+  close: ()=>void,
+  handleRestart: ()=>void,
+  handleSave: ()=>void
 }
-
-function ModalWin({player,open, close, actualTime}:ModalWinType) {
+type RacerType = {
+  id: string|null,
+  name: string,
+  average_speed: number,
+  wos: number,
+  times_played: number,
+  victories: number,
+  category: string,
+  tournament: string,
+  dead: boolean,
+}
+function ModalWin({player, winnerSpeed ,open, close, actualTime, handleRestart, handleSave}:ModalWinType) {
   const showTimer = (time: number) => {
     return (
       <>
-        <span className="digits">
           {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
-        </span>
-        <span className="digits"> 
           {("0" + Math.floor((time / 1000) % 60)).slice(-2)}.
-        </span>
-        <span className="digits mili-sec">
           {("0" + ((time / 10) % 100)).slice(-2)}
-        </span>
       </>
     );
   };
-  if(open) {return (
+  const handleCancel = () => {
+    handleRestart()
+    close()
+  }
+  if(open&&player) {return (
     <div className="modalWin-container">
-      <h3>Ganhador da partida: {player}</h3>
-      <h3>tempo: {showTimer(actualTime)}</h3>
-      <button onClick={close}>Voltar</button>
+      <h3>Ganhador da partida:</h3>
+      <div className='card'>
+        <p>nome: {player.name}</p>
+        
+        <p>velocidade: {winnerSpeed} km/h</p>
+        <p>tempo: {showTimer(actualTime)}</p>
+      </div>
+      <div className='modalWin-submit'>
+        <button className="danger" onClick={handleCancel}>Cancelar Partida</button>
+        <button onClick={handleSave}>Salvar Partida</button>
+      </div>
     </div>
   )}else return (<></>)
 }

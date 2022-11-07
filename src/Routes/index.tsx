@@ -9,6 +9,8 @@ import Header from "../components/Header";
 import Home from '../Views/Home/Index'
 import Login from '../Views/Login/Index'
 import Tournament from "../Views/Tournament/Index";
+import Keys from "../Views/Keys/Index";
+import Match from "../Views/Match/Index";
 
 interface route {
   page: ReactNode;
@@ -20,6 +22,8 @@ const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/tournament/:id" element={<Tournament/>} />
+      <Route path="/keys/:category/:id" element={<Keys/>} />
+      <Route path="/match" element={<Match/>} />
       {/* <Route path="/login" element={<Login/>} /> */}
     </Routes>
   </BrowserRouter>

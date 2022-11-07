@@ -47,7 +47,7 @@ function ModalJogador({ open, close, player, edit, getTournament,setBackdropStat
         <h3>Dados do jogador</h3>
         <div>
         <label htmlFor='name_viewPLayer'>Nome
-        <input type='text' id="name_viewPLayer" required onChange={(e)=>setPlayerData(player=>({...player,nome:e.target.value}))} value={playerData.name} disabled={!edit}/></label>
+        <input type='text' id="name_viewPLayer" required onChange={(e)=>setPlayerData(player=>({...player,name:e.target.value}))} value={playerData.name} disabled={!edit}/></label>
         <label htmlFor='category_viewPLayer'>Categoria
           <select id="category_viewPLayer" required onChange={(e)=>{
             setPlayerData(player=>({...player,category:e.target.value}))

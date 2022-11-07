@@ -129,6 +129,22 @@ button, .button {
   .small{
 			& span{font-size: x-small;}
   }
+  .clicable{
+    cursor: pointer;
+    &:hover{
+      filter: brightness(.7);
+    }
+    &:active{
+      filter: brightness(1)
+    }
+  }
+  .unClicable{
+    filter: brightness(.7);
+    pointer-events: none;
+    &:hover{
+      cursor:not-allowed;
+    }
+  }
   .card{
     @extend .small;
     padding: 1rem;
