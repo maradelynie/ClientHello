@@ -20,10 +20,14 @@ function Background() {
   }, [pathname]);
 
   return ( 
-    <span className={!status?"home-background-players":"home-background-players background-move"}>
+    <>
+     <span className={!status?"home-background-players":"home-background-players background-move"}>
       <img alt="imagem player 1" className="p1animation" src={p1} />
       <img alt="imagem player 2" className="p2animation" src={p2} />
     </span>
+    <div className="home-background-flickerneon"></div>
+    </>
+   
   )
 }
 

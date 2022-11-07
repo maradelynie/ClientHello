@@ -259,6 +259,22 @@ select{
   transform: scale(1);
   transform: translateY(-5rem);
 }
+.marcadagua{
+  font-size: x-small;
+  z-index: 10;
+}
+.home-background-flickerneon{
+  background-color: rgb(255, 255, 255);
+  height: 10rem;
+  position: fixed;
+  bottom: -9.5rem;
+  right: 0;
+  width: 100%;
+  animation: flicker 3s ease infinite alternate-reverse;
+  // animation: flicker 4s ease infinite alternate-reverse;
+  box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00bfff,
+					0 0 70px #00bfff, 0 0 80px #00bfff, 0 0 100px #00bfff, 0 0 150px #00bfff;
+}
 
 @keyframes flickerAnimation {
   0%   { opacity:1;transform: translate(0,  0px); }
@@ -275,7 +291,6 @@ select{
   45%  { opacity:0; }
   46%  { opacity:1; }
   100% { opacity:1; transform: translate(-3px, -0px); }
-
 }
 @keyframes spin {
   from {
@@ -298,6 +313,22 @@ select{
   100% {
     box-shadow: 0 10px 10px rgb(0, 0, 0);
   }
+}
+@keyframes flicker {
+  0%   { opacity:1;}
+  1%   { opacity:0; }
+  2%   { opacity:1; }
+  21%   { opacity:1;}
+  22%   { opacity:0; }
+  23%   { opacity:1;}
+  40%  { opacity:1; }
+  41%  { opacity:0; }
+  42%  { opacity:1; }
+  43%  { opacity:0;}
+  44%  { opacity:1; }
+  45%  { opacity:0; }
+  46%  { opacity:1; }
+  100% { opacity:1;}
 }
 // @keyframes pulse-red {
 //   0% {
