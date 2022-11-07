@@ -18,6 +18,7 @@ type ContadorType = {
   p1Pulse: number,
   p2Pulse: number,
   actualTime: number,
+  quickPlayMode: boolean,
   handleRestart: ()=>void,
   setStartTimer: (status:boolean)=>void,
   handleFinishMatch: (p1:RacerType,p2:RacerType,winner:string) => void
@@ -29,7 +30,7 @@ const TIRESIZE =
   Number(process.env.REACT_APP_TOTALDIST || 500)
 
  
-function Contador({p1, p2, p1Pulse, p2Pulse, setStartTimer, actualTime, handleRestart,handleFinishMatch}:ContadorType) {
+function Contador({p1, p2, p1Pulse, p2Pulse, setStartTimer, quickPlayMode, actualTime, handleRestart,handleFinishMatch}:ContadorType) {
   const [meterP1, setMeterP1] = useState(0)
   const [meterP2, setMeterP2] = useState(0)
   const [speedP1, setSpeedP1] = useState(0)
@@ -114,7 +115,7 @@ function Contador({p1, p2, p1Pulse, p2Pulse, setStartTimer, actualTime, handleRe
 
   return (
     <div className="contador-container">
-      <ModalWin player={winner} winnerSpeed={winnerSpeed} open={!!winner} close={closeWinner} actualTime={actualTime} handleSave={handleSave} handleRestart={handleRestart}/>
+      <ModalWin quickPlayMode={quickPlayMode} player={winner} winnerSpeed={winnerSpeed} open={!!winner} close={closeWinner} actualTime={actualTime} handleSave={handleSave} handleRestart={handleRestart}/>
       {p1 && p2 ?
         <>
           <section className="contador-p1">

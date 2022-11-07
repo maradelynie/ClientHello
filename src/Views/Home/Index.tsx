@@ -15,9 +15,9 @@ function Home() {
     <div className="home_container">
       <Backdrop open={backdropStatus}/>
       <Alert open={!!AlertMessage} close={()=>setMessageStatus('')} message={AlertMessage}/>
-      <button  onClick={()=>navigate('/load')}>Carregar jogo</button>
-      <button  onClick={()=>setModalCadastroTorneio(true)}>Novo Jogo</button>
-      <button  onClick={()=>setModalCadastroTorneio(true)}>Jogo Rápido</button>
+      <button type='button'  onClick={()=>navigate('/load')}>Carregar jogo</button>
+      <button type='button'  onClick={()=>setModalCadastroTorneio(true)}>Novo Jogo</button>
+      <button type='button'  onClick={()=>navigate('/match/quickplay')}>Jogo Rápido</button>
       {modalCadastroTorneio ?
       <ModalCadastroTorneio
         setBackdropStatus={setBackdropStatus}

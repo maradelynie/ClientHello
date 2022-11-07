@@ -37,7 +37,7 @@ function ModalCadastroJogador({ open, close, tournamentId,getTournament,setBackd
           <option value="mas">Masculino</option>
         </select>
         <div  className="modalCadastro-submit">
-          <button className="danger" onClick={close}>Cancelar</button>
+          <button  type='button' className="danger" onClick={close}>Cancelar</button>
           <button type='submit'>Cadastrar</button>
         </div>
        

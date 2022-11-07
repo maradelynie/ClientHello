@@ -8,6 +8,7 @@ type ModalWinType = {
   close: ()=>void,
   handleRestart: ()=>void,
   handleSave: ()=>void
+  quickPlayMode: boolean
 }
 type RacerType = {
   id: string|null,
@@ -20,7 +21,7 @@ type RacerType = {
   tournament: string,
   dead: boolean,
 }
-function ModalWin({player, winnerSpeed ,open, close, actualTime, handleRestart, handleSave}:ModalWinType) {
+function ModalWin({player, winnerSpeed ,open, close, quickPlayMode, actualTime, handleRestart, handleSave}:ModalWinType) {
   const showTimer = (time: number) => {
     return (
       <>
@@ -44,8 +45,15 @@ function ModalWin({player, winnerSpeed ,open, close, actualTime, handleRestart, 
         <p>tempo: {showTimer(actualTime)}</p>
       </div>
       <div className='modalWin-submit'>
-        <button className="danger" onClick={handleCancel}>Cancelar Partida</button>
-        <button onClick={handleSave}>Salvar Partida</button>
+        {quickPlayMode?
+          <button type='button' className="danger" onClick={close}>Fechar</button>
+        :
+        <>
+          <button type='button' className="danger" onClick={handleCancel}>Cancelar Partida</button>
+          <button type='button' onClick={handleSave}>Salvar Partida</button>
+          </>
+        }
+        
       </div>
     </div>
   )}else return (<></>)

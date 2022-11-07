@@ -42,8 +42,8 @@ function ModalDeleteJogador({ open, close, player, getTournament,setBackdropStat
         <h3>Deletar jogador</h3>
         <span>Após deletar o jogador não será possivel reaver os dados,</span><span> tem certeza que deseja continuar?</span>
           <div  className="modalCadastro-submit">
-            <button className="danger" onClick={close}>cancelar</button>
-            <button onClick={e=>handleDelete(e)}>Sim</button>
+            <button  type='button' className="danger" onClick={close}>cancelar</button>
+            <button  type='button' onClick={e=>handleDelete(e)}>Sim</button>
           </div>
       </form>
     </div>

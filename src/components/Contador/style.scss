@@ -5,6 +5,9 @@
 	align-items: center;
 	height: 60vh;
 	position: relative;
+	.contador-p1, .contador-p2{
+		border-top: 2px solid;
+	}
 		.contador-p1 .contador-bar{
 			animation: neon1 1.5s ease-in-out infinite alternate;
 			background-color: #fff;
@@ -37,12 +40,12 @@
 		}
 		@keyframes neon1 {
 			from {
-				box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #b6ff00,
-					0 0 70px #b6ff00, 0 0 80px #b6ff00, 0 0 100px #b6ff00, 0 0 150px #b6ff00;
+				box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fffb00,
+					0 0 70px #fffb00, 0 0 80px #fffb00, 0 0 100px #fffb00, 0 0 150px #fffb00;
 			}
 			to {
-				box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #b6ff00,
-					0 0 35px #b6ff00, 0 0 40px #b6ff00, 0 0 50px #b6ff00, 0 0 75px #b6ff00;
+				box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fffb00,
+					0 0 35px #fffb00, 0 0 40px #fffb00, 0 0 50px #fffb00, 0 0 75px #fffb00;
 			}
 		}
 
@@ -58,7 +61,7 @@
 				background-color: aqua;
 				margin: 0 .1rem;
 				display: flex;
-				width: 5rem;
+				width: 8rem;
 				justify-content: center;
 				align-items: flex-end;
 			}

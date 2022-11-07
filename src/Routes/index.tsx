@@ -12,6 +12,7 @@ import Home from '../Views/Home/Index'
 import Tournament from "../Views/Tournament/Index";
 import Keys from "../Views/Keys/Index";
 import Match from "../Views/Match/Index";
+import Background from "../components/background";
 
 interface route {
   page: ReactNode;
@@ -21,12 +22,14 @@ const AppRoutes = () => (
   <BrowserRouter>
     <Header/>
       <div className="main-container">
+       <Background/>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/load" element={<Load/>} />
         <Route path="/tournament/:id" element={<Tournament/>} />
         <Route path="/keys/:category/:id" element={<Keys/>} />
         <Route path="/match" element={<Match/>} />
+        <Route path="/match/quickplay" element={<Match/>} />
         {/* <Route path="/login" element={<Login/>} /> */}
       </Routes>
     </div>

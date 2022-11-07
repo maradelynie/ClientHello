@@ -241,6 +241,24 @@ select{
 .p2animation {
   animation: flickerAnimation 4s ease infinite alternate-reverse;
 }
+.home-background-players{
+  opacity: .7;
+  transform: scale(1.5);
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  gap: 10rem;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+  transition: .2s;
+  right: 0;
+}
+.home-background-players.background-move {
+  justify-content: center;
+  transform: scale(1);
+  transform: translateY(-5rem);
+}
 
 @keyframes flickerAnimation {
   0%   { opacity:1;transform: translate(0,  0px); }

@@ -7,9 +7,9 @@ function Header() {
   
   return (
     <header  className='header_title_h1'>
-      <button type='button'><ChevronLeft size={32} onClick={()=>navigate(-1)} className='clicable'/></button>
+      <button type='button' onClick={()=>navigate(-1)} ><ChevronLeft size={32} className='clicable'/></button>
         <h1>Hell.0</h1>
-      <button type='button'><ChevronRight size={32}  onClick={()=>navigate(1)} className='clicable'/></button>
+      <button type='button' onClick={()=>navigate(1)} ><ChevronRight size={32} className='clicable'/></button>
     </header>
   );
 }

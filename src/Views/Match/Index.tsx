@@ -1,6 +1,5 @@
 import "./style.scss";
-import p1 from "../../assets/p12.png";
-import p2 from "../../assets/p22.png";
+
 import * as api from '../../sevices'
 import Contador from "../../components/Contador";
 import { useEffect, useState } from "react";
@@ -8,7 +7,7 @@ import ModalStart from "../../components/ModalStart/index";
 import ModalCount from "../../components/ModalCount/index";
 import { io } from "socket.io-client";
 import { useMatch } from "../../hooks/useMatch";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Backdrop from "../../components/backdrop";
 import Alert from "../../components/alert";
 
@@ -32,6 +31,7 @@ function Home() {
   const [backdropStatus, setBackdropStatus] = useState(false);
   const [messageStatus, setMessageStatus] = useState('');
   const {match} = useMatch()
+  const {pathname} = useLocation()
   const navigate = useNavigate();
   const [playerA, setPlayerA] = useState<RacerType|''>("");
   const [p1Pulse, setP1Pulse] = useState(0);
@@ -42,6 +42,8 @@ function Home() {
 
   const [startTimer, setStartTimer] = useState(false);
   const [actualTime, setActualTime] = useState<number>(0);
+
+  const [quickPlayMode, setQuickPlayMode] = useState(false);
 
   const handleRestart = () => {
     setP2Pulse(0)
@@ -200,26 +202,49 @@ function Home() {
       setPlayerA(match.runnerA)
       setPlayerB(match.runnerB)
       setModalStart(true)
+    }else if(pathname.toLocaleLowerCase().includes('quickplay')){
+      const defaultPlayer = {
+        id: null,
+        average_speed: 0,
+        wos: 0,
+        times_played: 0,
+        victories: 0,
+        category: 'sem',
+        tournament: '0',
+        dead: false,
+      }
+      setQuickPlayMode(true)
+      setPlayerA({...defaultPlayer, name: 'Player 1'})
+      setPlayerB({...defaultPlayer, name: 'Player 2'})
     }else navigate('/')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
+    <div className="match-container">
       <Alert open={!!messageStatus} close={()=>setMessageStatus('')} message={messageStatus}/>
       <Backdrop open={backdropStatus}/>
-      <span className="home-background-players">
-        <img alt="imagem player 1" className="p1animation" src={p1} />
-        <img alt="imagem player 2" className="p2animation" src={p2} />
-      </span>
-      <div className="home-container">
-        <section>
-          {playerA && playerB && 
-            <Contador handleFinishMatch={handleFinishMatch} p1={playerA} p2={playerB} p1Pulse={p1Pulse} p2Pulse={p2Pulse} setStartTimer={setStartTimer} handleRestart={handleRestart} actualTime={actualTime}/>
-          }
+      
+        <section  className="home-container">
+        {playerA && playerB && 
+          <Contador
+           handleFinishMatch={handleFinishMatch} 
+           p1={playerA} p2={playerB} 
+           p1Pulse={p1Pulse} 
+           p2Pulse={p2Pulse} 
+           setStartTimer={setStartTimer} 
+           handleRestart={handleRestart} 
+           actualTime={actualTime}
+           quickPlayMode={quickPlayMode}
+           />
+        }
           <h3>{showTimer(actualTime)}</h3>
-         
-          <button className="danger" onClick={handleRestart}>Reiniciar</button>
+          
+          {quickPlayMode&&!actualTime?
+            (<button type='button' onClick={()=>setModalStart(true)}>Iniciar</button>)
+            :
+            (<button type='button' className="danger" onClick={handleRestart}>Reiniciar</button>)
+          }
 
         </section>
         <ModalCount open={showCountDown} countDown={countDown} />
@@ -231,8 +256,7 @@ function Home() {
           handleStart={handleStart}
           invert={handleInvert}
         />
-      </div>
-    </>
+    </div>
   );
 }
 

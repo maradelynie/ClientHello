@@ -29,7 +29,7 @@ function ModalCadastroTorneio({ open, close, setBackdropStatus, setMessageStatus
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder='Nome' required value={name} onChange={(e)=>setName(e.target.value)}/>
         <div  className="modalCadastro-submit">
-          <button className="danger" onClick={close}>Cancelar</button>
+          <button  type='button' className="danger" onClick={close}>Cancelar</button>
           <button type='submit'>Cadastrar</button>
         </div>
        

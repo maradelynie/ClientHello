@@ -80,11 +80,11 @@ function ModalJogador({ open, close, player, edit, getTournament,setBackdropStat
        
         {!edit?
           <div  className="modalCadastro-submit">
-            <button onClick={close}>ok</button>
+            <button type='button' onClick={close}>ok</button>
           </div>:
           <div  className="modalCadastro-submit">
-            <button className="danger" onClick={close}>cancelar</button>
-            <button onClick={e=>handleSave(e)}>salvar</button>
+            <button type='button' className="danger" onClick={close}>cancelar</button>
+            <button type='button' onClick={e=>handleSave(e)}>salvar</button>
           </div>
         }
        
