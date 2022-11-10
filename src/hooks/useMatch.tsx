@@ -65,7 +65,6 @@ const MatchProvider = ({ children }: MatchProps) => {
 
 function useMatch() {
   const context = useContext(MatchContext);
-
   return context;
 }
 

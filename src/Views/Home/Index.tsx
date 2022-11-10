@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ModalCadastroTorneio from "../../components/ModalCadastroTorneio";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/backdrop";
@@ -10,10 +10,6 @@ function Home() {
   const [backdropStatus, setBackdropStatus] = useState(false);
   const [AlertMessage, setMessageStatus] = useState("");
   const [modalCadastroTorneio, setModalCadastroTorneio] = useState(false);
-
-  useEffect(() => {
-    console.log("aquiiiiiii");
-  }, []);
 
   return (
     <div className="home_container">
