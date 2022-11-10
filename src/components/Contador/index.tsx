@@ -99,11 +99,12 @@ function Contador({
     if (p1Distance > p2Distance) {
       setP1Winning(true);
     } else setP1Winning(false);
-
     if (p1Distance >= TOTALDIST) {
+      setSpeedP1(p1Speed);
       setWinnerSpeed(p1Speed);
       return startWin(p1);
     } else if (p2Distance >= TOTALDIST) {
+      setSpeedP2(p2Speed);
       setWinnerSpeed(p2Speed);
       return startWin(p2);
     } else if (actualTime) {

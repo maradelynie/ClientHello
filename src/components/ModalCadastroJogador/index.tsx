@@ -35,34 +35,36 @@ function ModalCadastroJogador({
   if (open) {
     return (
       <div className="modalCadastroJogador-container">
-        <h3>Cadastre o jogador</h3>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            autoFocus
-            placeholder="Nome"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div className="select-container">
-            <select
+        <main>
+          <h3>Cadastre o jogador</h3>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              autoFocus
+              placeholder="Nome"
               required
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="sem">Sem Gênero</option>
-              <option value="fem">Feminino</option>
-              <option value="mas">Masculino</option>
-            </select>
-          </div>
-          <div className="modalCadastro-submit">
-            <button type="button" className="danger" onClick={close}>
-              Cancelar
-            </button>
-            <button type="submit">Cadastrar</button>
-          </div>
-        </form>
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <div className="select-container">
+              <select
+                required
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="sem">Sem Gênero</option>
+                <option value="fem">Feminino</option>
+                <option value="mas">Masculino</option>
+              </select>
+            </div>
+            <div className="modalCadastro-submit">
+              <button type="button" className="danger" onClick={close}>
+                Cancelar
+              </button>
+              <button type="submit">Cadastrar</button>
+            </div>
+          </form>
+        </main>
       </div>
     );
   } else return <></>;

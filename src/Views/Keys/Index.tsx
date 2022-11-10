@@ -33,6 +33,7 @@ type ParamsType = {
 
 function Tournament() {
   const { id, category } = useParams<ParamsType>();
+  const pa = useParams<ParamsType>();
   const { setupMatch, players } = useMatch();
   const navigate = useNavigate();
   const [backdropStatus, setBackdropStatus] = useState(true);
@@ -202,7 +203,7 @@ function Tournament() {
                         </div>
                       </div>
                       <div
-                        className={done ? "card" : "card clicable"}
+                        className={done ? "button unClicable" : "button"}
                         onClick={() => handleSetMatch(match)}
                       >
                         <Play />

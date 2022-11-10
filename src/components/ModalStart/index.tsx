@@ -17,32 +17,34 @@ function ModalStart({ open, close, invert, handleStart }: ModalCadastroType) {
   if (open && match && match.runnerB) {
     return (
       <div className="modalCadastro-container">
-        <form onSubmit={handleSubmit}>
-          <h3>Iniciar partida</h3>
+        <main>
+          <form onSubmit={handleSubmit}>
+            <h3>Iniciar partida</h3>
 
-          <div className="modalCadastro-players">
-            <div className="card">
-              <h5>Jogador: {match.runnerA.name}</h5>
-              <h5>Partidas: {match.runnerA.times_played}</h5>
-              <h5>Vitorias: {match.runnerA.victories}</h5>
+            <div className="modalCadastro-players">
+              <div className="card">
+                <h5>Jogador: {match.runnerA.name}</h5>
+                <h5>Partidas: {match.runnerA.times_played}</h5>
+                <h5>Vitorias: {match.runnerA.victories}</h5>
+              </div>
+              <div className="card">
+                <h5>Jogador: {match.runnerB.name}</h5>
+                <h5>Partidas: {match.runnerB.times_played}</h5>
+                <h5>Vitorias: {match.runnerB.victories}</h5>
+              </div>
             </div>
-            <div className="card">
-              <h5>Jogador: {match.runnerB.name}</h5>
-              <h5>Partidas: {match.runnerB.times_played}</h5>
-              <h5>Vitorias: {match.runnerB.victories}</h5>
-            </div>
-          </div>
 
-          <div className="modalCadastro-submit">
-            <button type="button" className="danger" onClick={close}>
-              Cancelar
-            </button>
-            <button type="button" onClick={invert}>
-              Inverter posições
-            </button>
-            <button type="submit">Iniciar</button>
-          </div>
-        </form>
+            <div className="modalCadastro-submit">
+              <button type="button" className="danger" onClick={close}>
+                Cancelar
+              </button>
+              <button type="button" onClick={invert}>
+                Inverter posições
+              </button>
+              <button type="submit">Iniciar</button>
+            </div>
+          </form>
+        </main>
       </div>
     );
   } else return <></>;

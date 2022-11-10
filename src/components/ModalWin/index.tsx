@@ -47,29 +47,31 @@ function ModalWin({
   if (open && player) {
     return (
       <div className="modalWin-container">
-        <h3>Ganhador da partida:</h3>
-        <div className="card">
-          <p>nome: {player.name}</p>
+        <main>
+          <h3>Ganhador da partida:</h3>
+          <div className="card">
+            <p>nome: {player.name}</p>
 
-          <p>velocidade: {winnerSpeed} km/h</p>
-          <p>tempo: {showTimer(actualTime)}</p>
-        </div>
-        <div className="modalWin-submit">
-          {quickPlayMode ? (
-            <button type="button" className="danger" onClick={close}>
-              Fechar
-            </button>
-          ) : (
-            <>
-              <button type="button" className="danger" onClick={handleCancel}>
-                Cancelar Partida
+            <p>velocidade: {winnerSpeed} km/h</p>
+            <p>tempo: {showTimer(actualTime)}</p>
+          </div>
+          <div className="modalWin-submit">
+            {quickPlayMode ? (
+              <button type="button" className="danger" onClick={close}>
+                Fechar
               </button>
-              <button type="button" onClick={handleSave}>
-                Salvar Partida
-              </button>
-            </>
-          )}
-        </div>
+            ) : (
+              <>
+                <button type="button" className="danger" onClick={handleCancel}>
+                  Cancelar Partida
+                </button>
+                <button type="button" onClick={handleSave}>
+                  Salvar Partida
+                </button>
+              </>
+            )}
+          </div>
+        </main>
       </div>
     );
   } else return <></>;

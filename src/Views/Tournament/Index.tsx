@@ -200,15 +200,13 @@ function Tournament() {
                     <div
                       onClick={() => handleGotToTOurnament("sem", semPlayers)}
                       className={
-                        semPlayers.length > 1
-                          ? "icon clicable"
-                          : "icon unClicable"
+                        semPlayers.length > 1 ? "button" : "button unClicable"
                       }
                     >
                       <Play />
                     </div>
                   </header>
-                  {semPlayers.map((player) => {
+                  {semPlayers.map((player, index) => {
                     return (
                       <li
                         key={player.key}
@@ -216,6 +214,8 @@ function Tournament() {
                       >
                         <h5>
                           <div>
+                            <h3>{index + 1}</h3>
+                            {"| "}
                             {player.dead ? <Frown size={14} /> : ""}{" "}
                             {player.name}
                           </div>{" "}
@@ -241,15 +241,13 @@ function Tournament() {
                     <div
                       onClick={() => handleGotToTOurnament("fem", femPlayers)}
                       className={
-                        femPlayers.length > 1
-                          ? "icon clicable"
-                          : "icon unClicable"
+                        femPlayers.length > 1 ? "button" : "button unClicable"
                       }
                     >
                       <Play />
                     </div>
                   </header>
-                  {femPlayers.map((player) => {
+                  {femPlayers.map((player, index) => {
                     return (
                       <li
                         key={player.key}
@@ -257,6 +255,8 @@ function Tournament() {
                       >
                         <h5>
                           <div>
+                            <h3>{index + 1}</h3>
+                            {"| "}
                             {player.dead ? <Frown size={14} /> : ""}{" "}
                             {player.name}
                           </div>{" "}
@@ -282,15 +282,13 @@ function Tournament() {
                     <div
                       onClick={() => handleGotToTOurnament("mas", masPlayers)}
                       className={
-                        masPlayers.length > 1
-                          ? "icon clicable"
-                          : "icon unClicable"
+                        masPlayers.length > 1 ? "button" : "button unClicable"
                       }
                     >
                       <Play />
                     </div>
                   </header>
-                  {masPlayers.map((player) => {
+                  {masPlayers.map((player, index) => {
                     return (
                       <li
                         key={player.key}
@@ -298,6 +296,8 @@ function Tournament() {
                       >
                         <h5>
                           <div>
+                            <h3>{index + 1}</h3>
+                            {"| "}
                             {player.dead ? <Frown size={14} /> : ""}{" "}
                             {player.name}
                           </div>{" "}
