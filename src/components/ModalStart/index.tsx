@@ -1,60 +1,51 @@
-import { useState } from 'react'
-import './style.scss'
+import { useState } from "react";
+import { useMatch } from "../../hooks/useMatch";
+import "./style.scss";
 
 type ModalCadastroType = {
-  playerA: RacerType|'',
-  playerB: RacerType|'',
-  handleStart: () => void,
-  close: () => void,
-  invert: () => void,
-  open: boolean
-}
-type RacerType = {
-  id: string|null,
-  name: string,
-  average_speed: number,
-  wos: number,
-  times_played: number,
-  victories: number,
-  category: string,
-  tournament: string,
-  dead: boolean,
-}
+  handleStart: () => void;
+  close: () => void;
+  invert: () => void;
+  open: boolean;
+};
+function ModalStart({ open, close, invert, handleStart }: ModalCadastroType) {
+  const { match } = useMatch();
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    handleStart();
+  };
+  if (open && match && match.runnerB) {
+    return (
+      <div className="modalCadastro-container">
+        <form onSubmit={handleSubmit}>
+          <h3>Iniciar partida</h3>
 
-function ModalStart({playerA, playerB, open, close, invert, handleStart}:ModalCadastroType) {
-  const handleSubmit = ( e:React.SyntheticEvent ) => {
-    e.preventDefault()
-    handleStart()
-  }
-  if(open) {return (
-    <div className="modalCadastro-container">
-      <form onSubmit={handleSubmit}>
-        <h3>Iniciar partida</h3>
-          
-        {playerA&&playerB && 
           <div className="modalCadastro-players">
-            <div className='card'>
-              <h5>Jogador: {playerA.name}</h5> 
-              <h5>Partidas: {playerA.times_played}</h5> 
-              <h5>Vitorias: {playerA.victories}</h5> 
+            <div className="card">
+              <h5>Jogador: {match.runnerA.name}</h5>
+              <h5>Partidas: {match.runnerA.times_played}</h5>
+              <h5>Vitorias: {match.runnerA.victories}</h5>
             </div>
-            <div className='card'>
-              <h5>Jogador: {playerB.name}</h5> 
-              <h5>Partidas: {playerB.times_played}</h5> 
-              <h5>Vitorias: {playerB.victories}</h5> 
+            <div className="card">
+              <h5>Jogador: {match.runnerB.name}</h5>
+              <h5>Partidas: {match.runnerB.times_played}</h5>
+              <h5>Vitorias: {match.runnerB.victories}</h5>
             </div>
           </div>
-        }
-       
-        <div  className="modalCadastro-submit">
-          <button type="button" className="danger" onClick={close}>Cancelar</button>
-          <button type="button" onClick={invert}>Inverter posições</button>
-          <button type='submit'>Iniciar</button>
-        </div>
-       
-      </form>
-    </div>
-  )}else return (<></>)
+
+          <div className="modalCadastro-submit">
+            <button type="button" className="danger" onClick={close}>
+              Cancelar
+            </button>
+            <button type="button" onClick={invert}>
+              Inverter posições
+            </button>
+            <button type="submit">Iniciar</button>
+          </div>
+        </form>
+      </div>
+    );
+  } else return <></>;
 }
 
 export default ModalStart;

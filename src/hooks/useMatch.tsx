@@ -1,65 +1,51 @@
-import { createContext, useContext, useState } from 'react'
-
+import { createContext, useContext, useState } from "react";
+import { MatchType, RacerType, TournamentType } from "../types/useMatch";
 
 type MatchProps = {
-  children: JSX.Element,
+  children: JSX.Element;
 };
 
-type UseMatch = {
-  id: string,
-  category: string,
-  runnerA: RacerType,
-  runnerB: RacerType,
-  tournament: string,
-  winner: string,
-}
-type RacerType = {
-  id: string|null,
-  name: string,
-  average_speed: number,
-  wos: number,
-  times_played: number,
-  victories: number,
-  category: string,
-  tournament: string,
-  dead: boolean,
-}
-type ReacersType = {
-  average_speed: number,
-  category: string,
-  id:number,
-  key:string,
-  name:string,
-  times_played:number
-  victories:number,
-  dead: boolean,
-  wos: number
-}
 type UseMatchProps = {
-  match: UseMatch | '',
-  setupMatch: (match:UseMatch)=>void,
-  players: ReacersType[] | [],
-  setupPlayers: (racers:ReacersType[])=>void,
-}
+  match: MatchType | false;
+  setupMatch: (match: MatchType) => void;
+  tournament: TournamentType | false;
+  setupTournament: (match: TournamentType) => void;
+  players: RacerType[] | [];
+  setupPlayers: (racers: RacerType[]) => void;
+};
+
 const MatchContext = createContext<UseMatchProps>({
-  match:'',
-  setupMatch:(match:UseMatch)=>{return},
+  match: false,
+  setupMatch: (match: MatchType) => {
+    return;
+  },
+  tournament: false,
+  setupTournament: (match: TournamentType) => {
+    return;
+  },
   players: [],
-  setupPlayers: (racers:ReacersType[])=>{return}
-})
+  setupPlayers: (racers: RacerType[]) => {
+    return;
+  },
+});
 
-const MatchProvider = ({children}:MatchProps) => {
-  const [match, setMatch] = useState<UseMatch|''>('')
-  const [players, setPlayers] = useState<ReacersType[]|[]>([])
+const MatchProvider = ({ children }: MatchProps) => {
+  const [tournament, setTournament] = useState<TournamentType | false>(false);
+  const [match, setMatch] = useState<MatchType | false>(false);
+  const [players, setPlayers] = useState<RacerType[] | []>([]);
 
-  const setupMatch = (value:UseMatch) => {
-    setMatch(value||'')
-    return
-  }
-  const setupPlayers = (value:ReacersType[]) => {
-    setPlayers(value||[])
-    return
-  }
+  const setupMatch = (value: MatchType) => {
+    setMatch(value || false);
+    return;
+  };
+  const setupPlayers = (value: RacerType[]) => {
+    setPlayers(value || []);
+    return;
+  };
+  const setupTournament = (value: TournamentType) => {
+    setTournament(value || false);
+    return;
+  };
 
   return (
     <MatchContext.Provider
@@ -67,18 +53,20 @@ const MatchProvider = ({children}:MatchProps) => {
         match,
         setupMatch,
         players,
-        setupPlayers
+        setupPlayers,
+        tournament,
+        setupTournament,
       }}
     >
       {children}
     </MatchContext.Provider>
-  )
-}
+  );
+};
 
 function useMatch() {
-  const context = useContext(MatchContext)
+  const context = useContext(MatchContext);
 
-  return context
+  return context;
 }
 
-export { MatchProvider, useMatch }
+export { MatchProvider, useMatch };

@@ -12,12 +12,9 @@
 		position: relative;
 		gap:1rem;
 	}
-	.home_card_tournament{
-		section{
-			display: flex;
-			justify-content: center;
-			gap: 0;
-		}
+	.load-tournament{
+		display: flex;
+		justify-content: space-between;
 	}
 	header{
 		display: flex;

@@ -53,7 +53,7 @@ function Load() {
       </header>
           <section>
             {tournamentsToShow.map(tournament=>{
-              return <div key={tournament.key} className="home_card_tournament" onClick={()=>navigate('/tournament/'+tournament.key)}><section><h3>{tournament.name}</h3><span>{new Date(tournament.date).toLocaleDateString()}</span></section><Edit /></div>
+              return <div key={tournament.key} className="button load-tournament" onClick={()=>navigate('/tournament/'+tournament.key)}><h3>{tournament.name}</h3><span>{new Date(tournament.date).toLocaleDateString()}</span></div>
             })}
           </section>
           {modalCadastroTorneio ?

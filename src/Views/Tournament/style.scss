@@ -1,48 +1,52 @@
-.tournament_container{	
-	display:flex;
-	justify-content: center;
-	flex-direction: column;
-	position: relative;
-	header{
-		display: flex;
-		justify-content: space-between;
-		nav{
-			display: flex;
-			justify-content: flex-end;
-			gap: 1rem;
-		}
-	}
-	main{
-		display: flex;
-		gap:1rem;
-		ul{
-			width: 100%;
-			min-width: 20rem;
-			transition: .2s;
-			h3{
-				margin-bottom: 2rem;
-			}
-			li h5{
-				display: flex;
-				justify-content: space-between;
-				margin: 0;
-				font-size: small;
-				align-items: center;
-			}
-			li:hover{
-				filter: brightness(.7);
-			}
-			li:active{
-				filter: brightness(1);
-			}
-			li .icon:hover{
-				color:red;
-			}
-			li{
-			cursor: pointer;
-
-			}
-		}
-		
-	}
+.tournament_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  max-height: calc(100vh - 14rem);
+  margin: auto;
+  header {
+    display: flex;
+    justify-content: space-between;
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  }
+  main {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+    .card {
+      overflow: auto;
+    }
+    ul {
+      width: 100%;
+      min-width: 20rem;
+      transition: 0.2s;
+      h3 {
+        margin-bottom: 2rem;
+      }
+      li h5 {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        font-size: small;
+        align-items: center;
+      }
+      li:hover {
+        filter: brightness(0.7);
+      }
+      li:active {
+        filter: brightness(1);
+      }
+      li .icon:hover {
+        color: red;
+      }
+      li {
+        cursor: pointer;
+      }
+    }
+  }
 }

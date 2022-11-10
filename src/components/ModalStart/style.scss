@@ -1,28 +1,29 @@
-.modalCadastro-container{
-	position: fixed;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-	background-color: rgba(0, 0, 0, 0.9);
-	height: 100vh;
-	width: 100vw;
-	top:0;
-	z-index: 100;
-	h3{
-		margin-bottom: 1rem;
-	}
-	form{
-		display: flex;
-		flex-direction: column;
-		gap:.2rem;
-	}
-	.modalCadastro-players{
-		display:flex;
-		gap:1rem;
-	}
-	.modalCadastro-submit{
-		margin-top: 1rem;
-		display: flex;
-		justify-content: space-between;
-	}
+.modalCadastro-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  z-index: 100;
+  h3 {
+    margin-bottom: 1rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .modalCadastro-players {
+    display: flex;
+    gap: 1rem;
+  }
+  .modalCadastro-submit {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }

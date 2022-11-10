@@ -3,9 +3,9 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 
 const socketPort = process.env.REACT_APP_SOCKETPORT || 3008
-const server = io(socketPort, {transports: ['websocket', 'polling']})
+const server = io(socketPort, { transports: ['websocket', 'polling'] })
 
-const serialPort = new SerialPort( {path:"COM5", baudRate: 9600 });
+const serialPort = new SerialPort({ path: "COM5", baudRate: 9600 });
 const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
 
 serialPort.on("open", () => {
@@ -15,7 +15,7 @@ serialPort.on("open", () => {
 server.on('connection', socket => {
   console.log('socket connected')
 
-  parser.on('data', data =>{
+  parser.on('data', data => {
     socket.emit('data', data)
     console.log(data)
   });
