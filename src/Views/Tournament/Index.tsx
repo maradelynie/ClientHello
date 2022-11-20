@@ -1,7 +1,7 @@
 import "./style.scss";
 import React, { useEffect, useState } from "react";
 import * as api from "../../sevices";
-import { Edit, Frown, Play, Trash, UserPlus } from "react-feather";
+import { Edit, Frown, Play, RefreshCcw, Trash, UserPlus } from "react-feather";
 import { useNavigate, useParams } from "react-router-dom";
 import ModalCadastroJogador from "../../components/ModalCadastroJogador";
 import ModalJogador from "../../components/ModalJogador";
@@ -63,6 +63,17 @@ function Tournament() {
       );
     } catch {
       setMessageStatus("Erro ao carregar torneios");
+    } finally {
+      setBackdropStatus(false);
+    }
+  };
+  const refreshGraph = async (category: string) => {
+    try {
+      setBackdropStatus(true);
+      await api.createTournamentKeys(id || "", category);
+      setMessageStatus("Chaves atualizadas");
+    } catch {
+      setMessageStatus("Erro ao atualizar chaves");
     } finally {
       setBackdropStatus(false);
     }
@@ -205,6 +216,16 @@ function Tournament() {
                     >
                       <Play />
                     </div>
+                    <div
+                      onClick={() => refreshGraph("sem")}
+                      className={
+                        semPlayers.every((player) => player.times_played < 1)
+                          ? "button"
+                          : "button unClicable"
+                      }
+                    >
+                      <RefreshCcw />
+                    </div>
                   </header>
                   {semPlayers.map((player, index) => {
                     return (
@@ -246,6 +267,16 @@ function Tournament() {
                     >
                       <Play />
                     </div>
+                    <div
+                      onClick={() => refreshGraph("fem")}
+                      className={
+                        femPlayers.every((player) => player.times_played < 1)
+                          ? "button"
+                          : "button unClicable"
+                      }
+                    >
+                      <RefreshCcw />
+                    </div>
                   </header>
                   {femPlayers.map((player, index) => {
                     return (
@@ -286,6 +317,16 @@ function Tournament() {
                       }
                     >
                       <Play />
+                    </div>
+                    <div
+                      onClick={() => refreshGraph("mas")}
+                      className={
+                        masPlayers.every((player) => player.times_played < 1)
+                          ? "button"
+                          : "button unClicable"
+                      }
+                    >
+                      <RefreshCcw />
                     </div>
                   </header>
                   {masPlayers.map((player, index) => {

@@ -76,7 +76,7 @@ function Contador({
         times_played: p1.times_played + 1,
         average_speed: p1.average_speed > speedP1 ? p1.average_speed : speedP1,
         victories: p1.key === winner.key ? p1.victories + 1 : p1.victories,
-        dead: p1.key === winner.id ? false : true,
+        dead: p1.key === winner.key ? false : true,
       };
       const newPlayerB = {
         ...p2,

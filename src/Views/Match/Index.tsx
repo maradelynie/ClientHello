@@ -172,6 +172,7 @@ function Home() {
     if (pathname.toLocaleLowerCase().includes("quickplay")) {
       const defaultPlayer = {
         id: null,
+        key: "0000",
         average_speed: 0,
         wos: 0,
         times_played: 0,
@@ -232,6 +233,8 @@ function Home() {
         close={handleCancelStart}
         handleStart={handleStart}
         invert={handleInvert}
+        p1={playerA}
+        p2={playerB}
       />
     </div>
   );
