@@ -65,12 +65,18 @@ function Tournament() {
       if (!tournamentKeys.graph[1][0]) {
         await api.createTournamentKeys(id || "", category || "");
         resolve(await api.getTournamentKeys(id || "", category || ""));
+      } else if (
+        players
+          .filter((player) => !player.dead)
+          .filter((player) => player.category === category).length > 1
+      ) {
+        try {
+          resolve(await api.updateTournamentKeys(id || "", category || ""));
+        } catch {
+          console.error("not over yet");
+        }
       }
-      try {
-        resolve(await api.updateTournamentKeys(id || "", category || ""));
-      } catch {
-        console.error("not over yet");
-      }
+
       resolve(tournamentKeys);
     });
 
@@ -84,16 +90,6 @@ function Tournament() {
           return await Promise.all(
             races.map(async (race: string) => {
               const dados = await api.getRace(race || "", id || "");
-              if (!dados.runnerB) {
-                const raceData = {
-                  ...dados,
-                  id: race,
-                  winner: dados.runnerA.key,
-                  runnerB: false,
-                };
-                await api.putRace(raceData, id || "");
-                return raceData;
-              }
               return { ...dados, id: race };
             })
           );
@@ -156,7 +152,6 @@ function Tournament() {
       <Backdrop open={backdropStatus} />
       {keys ? (
         keys.graph.map((race, index) => {
-          if (!race[0].id) return <></>;
           return (
             <div key={index + "-" + keys.category} className="key_tournament">
               <div className="key_tournament_index">
@@ -199,7 +194,7 @@ function Tournament() {
                               : false
                           }
                         >
-                          {match.runnerB ? match.runnerB.name : ""}
+                          {match.runnerB ? match.runnerB.name : "-"}
                         </div>
                       </div>
                       <div
