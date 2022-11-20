@@ -3,8 +3,6 @@ import * as api from '../../sevices'
 import { useNavigate } from 'react-router-dom';
 
 import './style.scss'
-import Backdrop from '../../components/backdrop';
-import Alert from '../../components/alert';
 import { Formik,
    Form,
    FormikHelpers,
