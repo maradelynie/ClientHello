@@ -3,39 +3,58 @@ import * as api from '../../sevices'
 import { useNavigate } from 'react-router-dom';
 
 import './style.scss'
+import Backdrop from '../../components/backdrop';
+import Alert from '../../components/alert';
+import { Formik,
+   Form,
+   FormikHelpers,
+   Field } from 'formik';
+import { useUser } from '../../hooks/useUser';
+import { useAlert } from '../../hooks/useAlert';
+import { useBackdrop } from '../../hooks/useBackdrop';
 
+ type MyFormValues = {
+   email: string;
+   password: string;
+ }
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const {setupMessage} = useAlert()
+  const {setupClose, setupOpen} = useBackdrop()
+  const { setupUser } = useUser();
+  const initialValues: MyFormValues = { email: '', password: '' };
+  
+  const handleLogin = async (values:MyFormValues, { setSubmitting }: FormikHelpers<MyFormValues>) => {
+    try{
+      setupOpen()
+      const user = await api.login(values)
 
-  const handleLogin = async ( e:React.SyntheticEvent ) => {
-    e.preventDefault()
-    const dataCredentials = {
-      email,
-      password
+      setupUser(user)
+      navigate('/')
+      setSubmitting(false);
+    }catch{
+      setupMessage('Email ou senha inválidos')
+    }finally{
+      setupClose()
     }
-    const login = await api.login(dataCredentials)
-    const {token} = login
-
-    await sessionStorage.setItem('tokenHello', token)
-
-    navigate('/')
+    
   }
+
   return (
     <div className="login-container">
-      <section>
-        <header>
-          <h1>Hell.O</h1>
-          <p>identifique-se</p>
-        </header>
-        <form onSubmit={e=>handleLogin(e)}>
-          <input type='email' onChange={(e)=>setEmail(e.target.value)} placeholder='email' required/>
-          <input type='password' onChange={(e)=>setPassword(e.target.value)} placeholder='senha' required/>
-          <button type='submit' >Enviar</button>
-        </form>
-      </section>
+      <Formik
+         initialValues={initialValues}
+         onSubmit={handleLogin}
+       >
+         <Form>
+           <label htmlFor="firstName">Email</label>
+           <Field id="login_email" name="email" placeholder="Email" />
+           <label htmlFor="firstName">Senhas</label>
+           <Field id="login_password" name="password" placeholder="Senha" />
+           <button type="submit">Login</button>
+         </Form>
+       </Formik>
     </div>
   );
 }

@@ -1,16 +1,12 @@
 .login-container{
-	display:flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-	form{
-		margin-top: 1rem;
-		display:flex;
-		flex-direction: column;
-		gap:.2rem;
-
-		input{
-			padding: .2rem;
-		}
-	}
+  max-width: 15rem;
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    button{
+      margin-top: 2rem;
+    }
+  }
+ 
 }

@@ -5,7 +5,7 @@ const APITOKEN = process.env.REACT_APP_APITOKEN
 
 export const sendWithAxios = async (rota:string, method:string, payload?:any, headers?:any) => {
     const result = await axios({
-      url: APIURL+"/"+rota,
+      url: 'http://localhost:3008'+"/"+rota,
       method: method,
       data: payload,
       headers: {
