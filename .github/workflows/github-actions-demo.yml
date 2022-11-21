@@ -16,5 +16,6 @@ jobs:
       - name: npm ci, build and test
         run: |
           npm ci
+          npm install
           npm run build --if-present
           npm test      
