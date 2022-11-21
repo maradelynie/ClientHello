@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: GitHub Actions tests
+run-name: ${{ github.actor }} runing automated tests 🚀
 on: [push]
 jobs:
   build_test:
@@ -9,7 +9,6 @@ jobs:
       - uses: borales/actions-yarn@v3.0.0
         with:
           cmd: install 
-     
       - uses: borales/actions-yarn@v3.0.0
         with:
           cmd: test 
