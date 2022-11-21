@@ -1,9 +1,8 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
-  jobs:
-  build:
-    name: Test
+jobs:
+  build_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
