@@ -2,20 +2,18 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  build_test:
+  jobs:
+  build:
+    name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: borales/actions-yarn@v3.0.0
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm ci, build and test
-        run: |
-          npm install
-          npm ci
-          npm run build --if-present
-          npm test      
+          cmd: install 
+      - uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: build
+      - uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: test 
