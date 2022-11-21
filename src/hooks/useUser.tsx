@@ -32,10 +32,7 @@ const UserProvider = ({ children }: UserProps) => {
   }
 
   const getToken = () => {
-    const localToken = sessionStorage.getItem('tokenHello')
-
     if(user) return user.token
-    else if(localToken) return localToken
     else return ''
   }
 

@@ -22,7 +22,6 @@ const AlertProvider = ({ children }: AlertProps) => {
     setMessage('')
   }
   const setupMessage = (value:string) => {
-    console.log(value)
     setMessage(value)
   }
 

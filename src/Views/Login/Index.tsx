@@ -27,7 +27,6 @@ function Login() {
     try{
       setupOpen()
       const user = await api.login(values)
-
       setupUser(user)
       navigate('/')
       setSubmitting(false);
@@ -46,10 +45,10 @@ function Login() {
          onSubmit={handleLogin}
        >
          <Form>
-           <label htmlFor="firstName">Email</label>
-           <Field id="login_email" name="email" placeholder="Email" />
-           <label htmlFor="firstName">Senhas</label>
-           <Field id="login_password" name="password" placeholder="Senha" />
+           <label htmlFor="email">Email</label>
+           <Field id="email" name="email" htmlFor='email' placeholder="Email" />
+           <label htmlFor="password">Senha</label>
+           <Field id="password" type="password" htmlFor='password' name="password" placeholder="Senha" />
            <button type="submit">Login</button>
          </Form>
        </Formik>
