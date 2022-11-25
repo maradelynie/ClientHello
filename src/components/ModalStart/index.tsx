@@ -1,4 +1,5 @@
-import { RacerType } from "../../types/useMatch";
+import { useState } from "react";
+import { useMatch } from "../../hooks/useMatch";
 import "./style.scss";
 
 type ModalCadastroType = {
@@ -6,22 +7,14 @@ type ModalCadastroType = {
   close: () => void;
   invert: () => void;
   open: boolean;
-  p1: RacerType | false;
-  p2: RacerType | false;
 };
-function ModalStart({
-  open,
-  close,
-  invert,
-  handleStart,
-  p1,
-  p2,
-}: ModalCadastroType) {
+function ModalStart({ open, close, invert, handleStart }: ModalCadastroType) {
+  const { match } = useMatch();
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     handleStart();
   };
-  if (open && p1 && p2) {
+  if (open && match && match.runnerB) {
     return (
       <div className="modalCadastro-container">
         <main>
@@ -30,14 +23,14 @@ function ModalStart({
 
             <div className="modalCadastro-players">
               <div className="card">
-                <h5>Jogador: {p1.name}</h5>
-                <h5>Partidas: {p1.times_played}</h5>
-                <h5>Vitorias: {p1.victories}</h5>
+                <h5>Jogador: {match.runnerA.name}</h5>
+                <h5>Partidas: {match.runnerA.times_played}</h5>
+                <h5>Vitorias: {match.runnerA.victories}</h5>
               </div>
               <div className="card">
-                <h5>Jogador: {p2.name}</h5>
-                <h5>Partidas: {p2.times_played}</h5>
-                <h5>Vitorias: {p2.victories}</h5>
+                <h5>Jogador: {match.runnerB.name}</h5>
+                <h5>Partidas: {match.runnerB.times_played}</h5>
+                <h5>Vitorias: {match.runnerB.victories}</h5>
               </div>
             </div>
 
