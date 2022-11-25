@@ -1,53 +1,66 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../sevices";
+import { Formik,
+   Form,
+   FormikHelpers,
+   Field } from 'formik';
 import "./style.scss";
+import { useAlert } from "../../hooks/useAlert";
+import { useBackdrop } from "../../hooks/useBackdrop";
 
 type ModalCadastroTorneioType = {
   close: () => void;
   open: boolean;
-  setBackdropStatus: (status: boolean) => void;
-  setMessageStatus: (message: string) => void;
 };
+
+ type MyFormValues = {
+   title: string;
+ }
 
 function ModalCadastroTorneio({
   open,
   close,
-  setBackdropStatus,
-  setMessageStatus,
 }: ModalCadastroTorneioType) {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    try {
-      setBackdropStatus(true);
-      await api.postTorunaments({ name: name });
+  const {setupMessage} = useAlert()
+  const {setupClose, setupOpen} = useBackdrop()
+  const initialValues: MyFormValues = { title: '' };
+
+  const handleSubmit = async (values:MyFormValues, { setSubmitting }: FormikHelpers<MyFormValues>) => {
+    try{
+      setupOpen()
+      await api.postTorunaments(values);
+
       navigate("/load");
-    } catch {
-      setMessageStatus("Erro ao cadastrar Torneio");
+      setSubmitting(false);
+    }catch{
+      setupMessage('Erro ao cadastrar Torneio')
+    }finally{
+      setupClose()
     }
-  };
+    
+  }
+
+
   if (open) {
     return (
       <div className="modalCadastroTorneio-container">
         <main>
           <h3>Cadastre o campeonato</h3>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Nome"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <div className="modalCadastro-submit">
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <label htmlFor="firstName">Nome</label>
+              <Field id="tournament_title" name="title" placeholder="Nome" />
               <button type="button" className="danger" onClick={close}>
                 Cancelar
               </button>
               <button type="submit">Cadastrar</button>
-            </div>
-          </form>
+            </Form>
+          </Formik>
         </main>
       </div>
     );

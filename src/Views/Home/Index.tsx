@@ -1,12 +1,14 @@
 import "./style.scss";
-import { useState } from "react";
+import { useState,useLayoutEffect } from "react";
 import ModalCadastroTorneio from "../../components/ModalCadastroTorneio";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/backdrop";
 import Alert from "../../components/alert";
+import { useUser } from "../../hooks/useUser";
 
 function Home() {
   const navigate = useNavigate();
+  const {logout} = useUser();
   const [backdropStatus, setBackdropStatus] = useState(false);
   const [AlertMessage, setMessageStatus] = useState("");
   const [modalCadastroTorneio, setModalCadastroTorneio] = useState(false);
@@ -27,6 +29,9 @@ function Home() {
       </button>
       <button type="button" onClick={() => navigate("/match/quickplay")}>
         Jogo Rápido
+      </button>
+      <button type="button" onClick={logout}>
+        Sair
       </button>
       {modalCadastroTorneio ? (
         <ModalCadastroTorneio

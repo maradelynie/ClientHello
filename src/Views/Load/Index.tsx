@@ -8,7 +8,7 @@ import Backdrop from "../../components/backdrop";
 import Alert from "../../components/alert";
 
 type TournamentType = {
-  key: number, name: string, date: string
+  id: number, title: string, createdAt: string
 }
 
 function Load() {
@@ -23,7 +23,7 @@ function Load() {
   const getTournaments = async () => {
     try{
       setBackdropStatus(true)
-      const {tournaments} = await api.getTorunaments()
+      const tournaments = await api.getTorunaments()
       setTournaments(tournaments)
       setTournamentsToShow(tournaments)
       setSearch('')
@@ -35,7 +35,7 @@ function Load() {
     
   }
   const handleSearch = (term:string) => {
-    setTournamentsToShow( tournaments.filter(tournament=>tournament.name.toLocaleLowerCase().includes(term.toLocaleLowerCase()))
+    setTournamentsToShow( tournaments.filter(tournament=>tournament.title.toLocaleLowerCase().includes(term.toLocaleLowerCase()))
     )
     setSearch(term)
   }
@@ -53,7 +53,7 @@ function Load() {
       </header>
           <section>
             {tournamentsToShow.map(tournament=>{
-              return <div key={tournament.key} className="button load-tournament" onClick={()=>navigate('/tournament/'+tournament.key)}><h3>{tournament.name}</h3><span>{new Date(tournament.date).toLocaleDateString()}</span></div>
+              return <div key={tournament.id} className="button load-tournament" onClick={()=>navigate('/tournament/'+tournament.id)}><h3>{tournament.title}</h3><span>{new Date(tournament.createdAt).toLocaleDateString()}</span></div>
             })}
           </section>
           {modalCadastroTorneio ?

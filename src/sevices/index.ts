@@ -5,7 +5,7 @@ type CredentialsType = {
   password: string;
 };
 type TorneioCreateType = {
-  name: string;
+  title: string;
 };
 type PlayerCreateType = {
   name: string;
@@ -34,7 +34,7 @@ export const login = async ({ email, password }: CredentialsType) => {
 
 export const getTorunaments = async () => {
   const response = await apiConfig.sendWithAxios(
-    "0idmwbdjtq3v4d1lq4o34gd31s54i934",
+    "tournaments",
     "GET"
   );
   return response.data;
@@ -56,7 +56,7 @@ export const getTorunament = async (id: string) => {
 export const postTorunaments = async (dataTournament: TorneioCreateType) => {
   try {
     const response = await apiConfig.sendWithAxios(
-      "r2mvt1f6wludndkivtq06upimbz97aah",
+      "tournaments",
       "POST",
       dataTournament
     );
