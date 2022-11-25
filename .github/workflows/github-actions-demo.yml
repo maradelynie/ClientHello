@@ -1,0 +1,14 @@
+name: GitHub Actions tests
+run-name: ${{ github.actor }} runing automated tests 🚀
+on: [push]
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: install 
+      - uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: test 

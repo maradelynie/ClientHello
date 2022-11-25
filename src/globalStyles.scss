@@ -86,7 +86,6 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -152,7 +151,6 @@ h1 {
   font-size: 5rem;
   font-family: "Press Start 2P", sans-serif;
 }
-
 html {
   cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABFklEQVRYR9WXURLDIAhE6/0PbSdOtUpcd1Gnpv1KGpTHBpCE1/cXq+vrMph7dGvXZTtpfW10DCA5jrH1H0Jhs5E0hnZdCR+vb5S8Nn8mQCeS9BdSalYJqMBjAGzq59xAESN7VFVUgV8AZB/dZBR7QTFDCqGquvUBVVoEtgIwpQRzmANSFHgWQKExHdIrPeuMvQNDarXe6nC/AutgV3JW+6bgqQLeV8FekRtgV+ToDKEKnACYKsfZjjkam7a0ZpYTytwmgainpC3HvwBocgKOxqRjehoR9DFKNFYtOwCGYCszobeCbl26N6yyQ6g8X/Wex/rBPsNEV6qAMaJPMynIHQCoSqS9JSMmwef51LflTgCRszU7DvAGiV6mHWfsaVUAAAAASUVORK5CYII=),
     auto;
@@ -170,7 +168,6 @@ button,
   text-transform: lowercase;
   border-radius: 0.5rem;
   color: black;
-  // animation: pulse-blue 2s infinite;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 5px 10px rgb(0, 0, 0);
   cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC)
@@ -180,8 +177,6 @@ button,
   &.danger {
     background-color: rgb(205, 0, 0);
     color: #fff;
-    // color: rgb(177, 0, 0);
-    // animation: pulse-red 2s infinite;
   }
   &:focus-visible,
   &:hover {
@@ -192,7 +187,6 @@ button,
     cursor: not-allowed;
   }
 }
-
 .select-container {
   display: unset !important;
   position: relative;
@@ -215,7 +209,6 @@ button,
     color: #fff;
   }
 }
-
 select {
   border-style: solid;
   border-width: 2px;
@@ -237,7 +230,6 @@ select {
   border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(255,255,255)" /></svg>');
   outline-color: #e7e7e7;
 }
-
 .small {
   & span {
     font-size: x-small;
@@ -261,10 +253,7 @@ select {
 }
 .card {
   @extend .small;
-  // padding: 1rem;
-  // background-color: rgba(0, 0, 0, 0.5);
   border: 5px white solid;
-  // margin: 0.5rem 0;
   border-image-slice: 2;
   border-image-width: 2;
   border-image-repeat: stretch;
@@ -296,7 +285,6 @@ select {
     box-shadow: 0 0 10px rgb(4, 250, 254);
   }
 }
-
 .global-container {
   &::before {
     content: "";
@@ -312,8 +300,6 @@ select {
   width: 100vw;
   min-height: 100vh;
   color: white;
-  // text-shadow: 0 0 3px #000, 0 0 5px #fff;
-  // text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
   font-size: large;
   z-index: -10;
   display: flex;
@@ -324,9 +310,10 @@ select {
 .main-container {
   height: calc(100vh - 12rem);
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
 }
-
 .p1animation {
   animation: flickerAnimation 5s ease infinite;
 }
@@ -363,7 +350,6 @@ select {
   right: 0;
   width: 100%;
   animation: flicker 3s ease infinite alternate-reverse;
-  // animation: flicker 4s ease infinite alternate-reverse;
   box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00bfff,
     0 0 70px #00bfff, 0 0 80px #00bfff, 0 0 100px #00bfff, 0 0 150px #00bfff;
 }
@@ -483,29 +469,4 @@ select {
     opacity: 1;
   }
 }
-// @keyframes pulse-red {
-//   0% {
-//     box-shadow: 0 0 10px rgba(255, 83, 83, 0.7);
-//   }
 
-//   70% {
-//     box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
-//   }
-
-//   100% {
-//     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
-//   }
-// }
-// @keyframes pulse-blue {
-//   0% {
-//     box-shadow: 0 0 10px rgba(83, 244, 255, 0.7);
-//   }
-
-//   70% {
-//     box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
-//   }
-
-//   100% {
-//     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
-//   }
-// }
