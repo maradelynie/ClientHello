@@ -65,7 +65,7 @@ export const postTorunaments = async (dataTournament: TorneioCreateType) => {
 };
 export const deletTorunaments = async (id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "r2mvt1f6wludndkivtq06upimbz97aah",
       "DELETE",
       { key: id },
@@ -78,7 +78,7 @@ export const deletTorunaments = async (id: string) => {
 };
 export const postPlayer = async (dataPlayer: PlayerCreateType, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "92lifkj4demkm16tk5jc3vaj78pdmawx",
       "POST",
       { player: dataPlayer },
@@ -91,7 +91,7 @@ export const postPlayer = async (dataPlayer: PlayerCreateType, id: string) => {
 };
 export const putPlayer = async (dataPlayer: PlayerCreateType, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "92lifkj4demkm16tk5jc3vaj78pdmawx",
       "PUT",
       { player: dataPlayer },
@@ -107,7 +107,7 @@ export const deletePlayer = async (
   id: string
 ) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "92lifkj4demkm16tk5jc3vaj78pdmawx?player=" + dataPlayer.key,
       "DELETE",
       null,
@@ -120,7 +120,7 @@ export const deletePlayer = async (
 };
 export const getTournamentKeys = async (id: string, category: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "xkqbcdm7if1d7c3r9r75j1rjsc1wdxb9?category=" + category,
       "GET",
       null,
@@ -133,7 +133,7 @@ export const getTournamentKeys = async (id: string, category: string) => {
 };
 export const createTournamentKeys = async (id: string, category: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "xkqbcdm7if1d7c3r9r75j1rjsc1wdxb9",
       "POST",
       { category },
@@ -146,7 +146,7 @@ export const createTournamentKeys = async (id: string, category: string) => {
 };
 export const updateTournamentKeys = async (id: string, category: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "xkqbcdm7if1d7c3r9r75j1rjsc1wdxb9",
       "PUT",
       { category },
@@ -160,7 +160,7 @@ export const updateTournamentKeys = async (id: string, category: string) => {
 
 export const getRace = async (race: string, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "eog0rhpyfy4a7kefggoyrvc5l2rh2nty?key=" + race,
       "GET",
       null,
@@ -173,7 +173,7 @@ export const getRace = async (race: string, id: string) => {
 };
 export const getRacer = async (racer: string, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "92lifkj4demkm16tk5jc3vaj78pdmawx?key=" + racer,
       "GET",
       null,
@@ -190,7 +190,7 @@ export const putPlayers = async (
   id: string
 ) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "92lifkj4demkm16tk5jc3vaj78pdmawx",
       "PUT",
       { players: dataPlayer },
@@ -203,7 +203,7 @@ export const putPlayers = async (
 };
 export const putRace = async (race: RaceType, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxios(
+    const response = await apiConfig.sendWithAxiosNoCode(
       "eog0rhpyfy4a7kefggoyrvc5l2rh2nty",
       "PUT",
       race,

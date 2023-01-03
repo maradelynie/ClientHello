@@ -1,17 +1,27 @@
 import axios from 'axios'
 
-const APIURL = process.env.REACT_APP_APIURL
-const APITOKEN = process.env.REACT_APP_APITOKEN
 
-export const sendWithAxios = async (rota:string, method:string, payload?:any, header?:any) => {
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+export const sendWithAxiosNoCode = async (rota:string, method:string, payload?:any, header?:any) => {
+  const APINOCODEURL = process.env.REACT_APP_APINOCODEURL
+    const result = await axios({
+      url: APINOCODEURL+"/"+rota,
+      method: method,
+      data: payload,
+      headers: {...header}})
+    return result
+}
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+export const sendWithAxios = async (rota:string, method:string, payload?:any) => {
+  const APIURL = process.env.REACT_APP_APIURL
   const token = sessionStorage.getItem('tokenHello')
     const result = await axios({
-      url: "http://localhost:3008"+"/"+rota,
+      url: APIURL+"/"+rota,
       method: method,
       data: payload,
       headers: token?{
         authorization: token || ''
-      }:header?{...header}:{},
+      }:{},
     })
     return result
 }

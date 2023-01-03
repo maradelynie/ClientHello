@@ -1,47 +1,48 @@
-import { useParams } from "react-router-dom";
-import * as api from "../../sevices";
+import { useParams } from 'react-router-dom'
+
+import * as api from '../../sevices'
 
 type ModalDeleteJogadorType = {
-  close: () => void;
-  getTournament?: () => void;
-  open: boolean;
-  edit?: boolean;
-  player: jogadorType;
-  setBackdropStatus: (status: boolean) => void;
-  setMessageStatus: (message: string) => void;
-};
+  close: () => void
+  getTournament?: () => void
+  open: boolean
+  edit?: boolean
+  player: jogadorType
+  setBackdropStatus: (status: boolean) => void
+  setMessageStatus: (message: string) => void
+}
 type jogadorType = {
-  key: string;
-  name: string;
-  category: string;
-  average_speed: number;
-  dead: boolean;
-  times_played: number;
-  victories: number;
-  wos: number;
-};
+  key: string
+  name: string
+  category: string
+  average_speed: number
+  dead: boolean
+  times_played: number
+  victories: number
+  wos: number
+}
 function ModalDeleteJogador({
   open,
   close,
   player,
   getTournament,
   setBackdropStatus,
-  setMessageStatus,
+  setMessageStatus
 }: ModalDeleteJogadorType) {
-  const { id } = useParams();
+  const { id } = useParams()
   const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (getTournament) {
       try {
-        setBackdropStatus(true);
-        await api.deletePlayer({ key: player.key }, id || "");
-        getTournament();
-        close();
+        setBackdropStatus(true)
+        await api.deletePlayer({ key: player.key }, id || '')
+        getTournament()
+        close()
       } catch {
-        setMessageStatus("Erro ao deletar jogador");
+        setMessageStatus('Erro ao deletar jogador')
       }
     }
-  };
+  }
   if (open) {
     return (
       <div className="modalJogador-container">
@@ -56,15 +57,15 @@ function ModalDeleteJogador({
               <button type="button" className="danger" onClick={close}>
                 cancelar
               </button>
-              <button type="button" onClick={(e) => handleDelete(e)}>
+              <button type="button" onClick={e => handleDelete(e)}>
                 Sim
               </button>
             </div>
           </form>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalDeleteJogador;
+export default ModalDeleteJogador

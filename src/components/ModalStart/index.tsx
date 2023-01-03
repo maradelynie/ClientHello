@@ -1,19 +1,18 @@
-import { useState } from "react";
-import { useMatch } from "../../hooks/useMatch";
-import "./style.scss";
+import { useMatch } from '../../hooks/useMatch'
+import './style.scss'
 
 type ModalCadastroType = {
-  handleStart: () => void;
-  close: () => void;
-  invert: () => void;
-  open: boolean;
-};
+  handleStart: () => void
+  close: () => void
+  invert: () => void
+  open: boolean
+}
 function ModalStart({ open, close, invert, handleStart }: ModalCadastroType) {
-  const { match } = useMatch();
+  const { match } = useMatch()
   const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    handleStart();
-  };
+    e.preventDefault()
+    handleStart()
+  }
   if (open && match && match.runnerB) {
     return (
       <div className="modalCadastro-container">
@@ -46,8 +45,8 @@ function ModalStart({ open, close, invert, handleStart }: ModalCadastroType) {
           </form>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalStart;
+export default ModalStart

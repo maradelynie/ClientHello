@@ -1,57 +1,49 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as api from "../../sevices";
-import { Formik,
-   Form,
-   FormikHelpers,
-   Field } from 'formik';
-import "./style.scss";
-import { useAlert } from "../../hooks/useAlert";
-import { useBackdrop } from "../../hooks/useBackdrop";
+import { Formik, Form, FormikHelpers, Field } from 'formik'
+import { useNavigate } from 'react-router-dom'
+
+import { useAlert } from '../../hooks/useAlert'
+import { useBackdrop } from '../../hooks/useBackdrop'
+import * as api from '../../sevices'
+import './style.scss'
 
 type ModalCadastroTorneioType = {
-  close: () => void;
-  open: boolean;
-};
+  close: () => void
+  open: boolean
+}
 
- type MyFormValues = {
-   title: string;
- }
+type MyFormValues = {
+  title: string
+}
 
-function ModalCadastroTorneio({
-  open,
-  close,
-}: ModalCadastroTorneioType) {
-  const navigate = useNavigate();
-  const {setupMessage} = useAlert()
-  const {setupClose, setupOpen} = useBackdrop()
-  const initialValues: MyFormValues = { title: '' };
+function ModalCadastroTorneio({ open, close }: ModalCadastroTorneioType) {
+  const navigate = useNavigate()
+  const { setupMessage } = useAlert()
+  const { setupClose, setupOpen } = useBackdrop()
+  const initialValues: MyFormValues = { title: '' }
 
-  const handleSubmit = async (values:MyFormValues, { setSubmitting }: FormikHelpers<MyFormValues>) => {
-    try{
+  const handleSubmit = async (
+    values: MyFormValues,
+    { setSubmitting }: FormikHelpers<MyFormValues>
+  ) => {
+    try {
       setupOpen()
-      await api.postTorunaments(values);
+      await api.postTorunaments(values)
 
-      navigate("/load");
-      setSubmitting(false);
-    }catch{
+      navigate('/load')
+      setSubmitting(false)
+    } catch {
       setupMessage('Erro ao cadastrar Torneio')
-    }finally{
+    } finally {
       setupClose()
     }
-    
   }
-
 
   if (open) {
     return (
       <div className="modalCadastroTorneio-container">
         <main>
           <h3>Cadastre o campeonato</h3>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-          >
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             <Form>
               <label htmlFor="firstName">Nome</label>
               <Field id="tournament_title" name="title" placeholder="Nome" />
@@ -63,8 +55,8 @@ function ModalCadastroTorneio({
           </Formik>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalCadastroTorneio;
+export default ModalCadastroTorneio

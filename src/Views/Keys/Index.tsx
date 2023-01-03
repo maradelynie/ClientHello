@@ -1,141 +1,133 @@
-import "./style.scss";
-import React, { useEffect, useState } from "react";
-import * as api from "../../sevices";
-import { Play } from "react-feather";
-import { useNavigate, useParams } from "react-router-dom";
-import ModalJogador from "../../components/ModalJogador";
-import Backdrop from "../../components/backdrop";
-import Alert from "../../components/alert";
-import { useMatch } from "../../hooks/useMatch";
-import { KeysType, MatchType, RacerType } from "../../types/useMatch";
+import { useEffect, useState } from 'react'
+import { Play } from 'react-feather'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import Alert from '../../components/alert'
+import Backdrop from '../../components/backdrop'
+import ModalJogador from '../../components/ModalJogador'
+import { useMatch } from '../../hooks/useMatch'
+import * as api from '../../sevices'
+import { KeysType, MatchType, RacerType } from '../../types/useMatch'
+import './style.scss'
 
 type rawTournamentType = {
-  category: string;
-  current_race: string;
-  current_round: string;
-  graph: string[][];
-  tournament: string;
-};
+  category: string
+  current_race: string
+  current_round: string
+  graph: string[][]
+  tournament: string
+}
 
 type RawMatchType = {
-  id: string;
-  category: string;
-  runnerA: string;
-  runnerB: string;
-  tournament: string;
-  winner: string;
-};
+  id: string
+  category: string
+  runnerA: string
+  runnerB: string
+  tournament: string
+  winner: string
+}
 
 type ParamsType = {
-  id: string;
-  category: string;
-};
+  id: string
+  category: string
+}
 
 function Tournament() {
-  const { id, category } = useParams<ParamsType>();
-  const pa = useParams<ParamsType>();
-  const { setupMatch, players } = useMatch();
-  const navigate = useNavigate();
-  const [backdropStatus, setBackdropStatus] = useState(true);
-  const [keys, setKeys] = useState<KeysType>();
-  const [messageStatus, setMessageStatus] = useState("");
-  const [viewPlayerData, setViewPlayerData] = useState<RacerType | false>(
-    false
-  );
+  const { id, category } = useParams<ParamsType>()
+  const { setupMatch, players } = useMatch()
+  const navigate = useNavigate()
+  const [backdropStatus, setBackdropStatus] = useState(true)
+  const [keys, setKeys] = useState<KeysType>()
+  const [messageStatus, setMessageStatus] = useState('')
+  const [viewPlayerData, setViewPlayerData] = useState<RacerType | false>(false)
 
   const getTournament = async () => {
     try {
-      setBackdropStatus(true);
-      const tournamentKeys: rawTournamentType = await getTournamentData();
-      const allRaces: MatchType[][] = await getRacesData(tournamentKeys);
-      setKeys({ ...tournamentKeys, graph: allRaces });
+      setBackdropStatus(true)
+      const tournamentKeys: rawTournamentType = await getTournamentData()
+      const allRaces: MatchType[][] = await getRacesData(tournamentKeys)
+      setKeys({ ...tournamentKeys, graph: allRaces })
     } catch {
-      setMessageStatus("Erro ao carregar chaves");
+      setMessageStatus('Erro ao carregar chaves')
     } finally {
-      setBackdropStatus(false);
+      setBackdropStatus(false)
     }
-  };
+  }
 
   const getTournamentData = async () =>
-    await new Promise<rawTournamentType>(async (resolve, reject) => {
+    await new Promise<rawTournamentType>(async resolve => {
       const tournamentKeys = await api.getTournamentKeys(
-        id || "",
-        category || ""
-      );
+        id || '',
+        category || ''
+      )
       if (!tournamentKeys.graph[1][0]) {
-        await api.createTournamentKeys(id || "", category || "");
-        resolve(await api.getTournamentKeys(id || "", category || ""));
+        await api.createTournamentKeys(id || '', category || '')
+        resolve(await api.getTournamentKeys(id || '', category || ''))
       }
       try {
-        resolve(await api.updateTournamentKeys(id || "", category || ""));
+        resolve(await api.updateTournamentKeys(id || '', category || ''))
       } catch {
-        console.error("not over yet");
+        console.error('not over yet')
       }
-      resolve(tournamentKeys);
-    });
+      resolve(tournamentKeys)
+    })
 
   const getRacesData = async (tournamentKeys: rawTournamentType) =>
-    await new Promise<MatchType[][]>(async (resolve, reject) => {
-      const filteredData = tournamentKeys.graph.filter(
-        (races) => races[0] !== ""
-      );
+    await new Promise<MatchType[][]>(async resolve => {
+      const filteredData = tournamentKeys.graph.filter(races => races[0] !== '')
       const raceData = await Promise.all(
         filteredData.map(async (races: string[]) => {
           return await Promise.all(
             races.map(async (race: string) => {
-              const dados = await api.getRace(race || "", id || "");
+              const dados = await api.getRace(race || '', id || '')
               if (!dados.runnerB) {
                 const raceData = {
                   ...dados,
                   id: race,
                   winner: dados.runnerA.key,
-                  runnerB: false,
-                };
-                await api.putRace(raceData, id || "");
-                return raceData;
+                  runnerB: false
+                }
+                await api.putRace(raceData, id || '')
+                return raceData
               }
-              return { ...dados, id: race };
+              return { ...dados, id: race }
             })
-          );
+          )
         })
-      );
+      )
 
       const playersData: MatchType[][] = raceData.map(
         (races: RawMatchType[]) => {
-          return races.map((race) => {
-            const playerA = players.find(
-              (player) => player.key === race.runnerA
-            );
-            const playerB = players.find(
-              (player) => player.key === race.runnerB
-            );
+          return races.map(race => {
+            const playerA = players.find(player => player.key === race.runnerA)
+            const playerB = players.find(player => player.key === race.runnerB)
 
-            if (!playerA) throw Error();
+            if (!playerA) throw Error()
             return {
               ...race,
               runnerA: playerA,
-              runnerB: playerB || false,
-            };
-          });
+              runnerB: playerB || false
+            }
+          })
         }
-      );
+      )
 
-      resolve(playersData);
-    });
+      resolve(playersData)
+    })
 
   const handleSetMatch = (match: MatchType) => {
     if (match) {
-      setupMatch(match);
-      navigate("/match");
+      setupMatch(match)
+      navigate('/match')
     }
-  };
+  }
 
   useEffect(() => {
     if (!players.length) {
-      navigate("/tournament/" + id);
-    } else if (id && category) getTournament();
+      navigate('/tournament/' + id)
+    } else if (id && category) getTournament()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <div className="keys_container">
@@ -150,25 +142,25 @@ function Tournament() {
       )}
       <Alert
         open={!!messageStatus}
-        close={() => setMessageStatus("")}
+        close={() => setMessageStatus('')}
         message={messageStatus}
       />
       <Backdrop open={backdropStatus} />
       {keys ? (
         keys.graph.map((race, index) => {
-          if (!race[0].id) return <></>;
+          if (!race[0].id) return <></>
           return (
-            <div key={index + "-" + keys.category} className="key_tournament">
+            <div key={index + '-' + keys.category} className="key_tournament">
               <div className="key_tournament_index">
                 {race.map((match, indexMatch) => {
-                  const done = match.winner;
+                  const done = match.winner
                   return (
                     <div
-                      key={indexMatch + "-" + keys.category}
+                      key={indexMatch + '-' + keys.category}
                       className={
                         done
-                          ? "key_card_tournament done"
-                          : "key_card_tournament"
+                          ? 'key_card_tournament done'
+                          : 'key_card_tournament'
                       }
                     >
                       <h3>{indexMatch + 1}</h3>
@@ -176,22 +168,22 @@ function Tournament() {
                         <div
                           className={
                             match.winner === match.runnerA.key
-                              ? "card winner clicable"
+                              ? 'card winner clicable'
                               : done
-                              ? "card"
-                              : "card clicable"
+                              ? 'card'
+                              : 'card clicable'
                           }
-                          onClick={() => setViewPlayerData(match.runnerA || "")}
+                          onClick={() => setViewPlayerData(match.runnerA || '')}
                         >
                           {match.runnerA.name}
                         </div>
                         <div
                           className={
                             match.runnerB && match.winner === match.runnerB.key
-                              ? "card winner clicable"
+                              ? 'card winner clicable'
                               : done
-                              ? "card"
-                              : "card clicable"
+                              ? 'card'
+                              : 'card clicable'
                           }
                           onClick={() =>
                             match.runnerB
@@ -199,27 +191,27 @@ function Tournament() {
                               : false
                           }
                         >
-                          {match.runnerB ? match.runnerB.name : ""}
+                          {match.runnerB ? match.runnerB.name : ''}
                         </div>
                       </div>
                       <div
-                        className={done ? "button unClicable" : "button"}
+                        className={done ? 'button unClicable' : 'button'}
                         onClick={() => handleSetMatch(match)}
                       >
                         <Play />
                       </div>
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
-          );
+          )
         })
       ) : (
         <></>
       )}
     </div>
-  );
+  )
 }
 
-export default Tournament;
+export default Tournament

@@ -1,11 +1,11 @@
-import './style.scss'
 import { useEffect, useState } from 'react'
-import * as api from '../../sevices'
-import ModalCadastroTorneio from '../../components/ModalCadastroTorneio'
-import { Edit } from 'react-feather'
 import { useNavigate } from 'react-router-dom'
-import Backdrop from '../../components/backdrop'
+
 import Alert from '../../components/alert'
+import Backdrop from '../../components/backdrop'
+import ModalCadastroTorneio from '../../components/ModalCadastroTorneio'
+import * as api from '../../sevices'
+import './style.scss'
 
 type TournamentType = {
   id: number

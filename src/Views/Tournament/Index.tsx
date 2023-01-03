@@ -1,15 +1,16 @@
-import './style.scss'
 import React, { useEffect, useState } from 'react'
-import * as api from '../../sevices'
 import { Edit, Frown, Play, Trash, UserPlus } from 'react-feather'
 import { useNavigate, useParams } from 'react-router-dom'
-import ModalCadastroJogador from '../../components/ModalCadastroJogador'
-import ModalJogador from '../../components/ModalJogador'
-import ModalDeleteJogador from '../../components/ModalDeleteJogador'
-import Backdrop from '../../components/backdrop'
+
 import Alert from '../../components/alert'
+import Backdrop from '../../components/backdrop'
+import ModalCadastroJogador from '../../components/ModalCadastroJogador'
+import ModalDeleteJogador from '../../components/ModalDeleteJogador'
 import ModalDeleteTournament from '../../components/ModalDeleteTournament'
+import ModalJogador from '../../components/ModalJogador'
 import { useMatch } from '../../hooks/useMatch'
+import * as api from '../../sevices'
+import './style.scss'
 
 type ReacersType = {
   average_speed: number
