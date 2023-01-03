@@ -1,15 +1,16 @@
-import './style.scss'
-import { useState, useLayoutEffect } from 'react'
-import ModalCadastroTorneio from '../../components/ModalCadastroTorneio'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Backdrop from '../../components/backdrop'
+
 import Alert from '../../components/alert'
+import Backdrop from '../../components/backdrop'
+import ModalCadastroTorneio from '../../components/ModalCadastroTorneio'
 import { useUser } from '../../hooks/useUser'
+import './style.scss'
 
 function Home() {
   const navigate = useNavigate()
   const { logout } = useUser()
-  const [backdropStatus, setBackdropStatus] = useState(false)
+  const [backdropStatus] = useState(false)
   const [AlertMessage, setMessageStatus] = useState('')
   const [modalCadastroTorneio, setModalCadastroTorneio] = useState(false)
 

@@ -1,12 +1,12 @@
 type ModalDeleteTournamentType = {
-  close: () => void;
-  open: boolean;
-  handleDeleteTournament: () => void;
-};
+  close: () => void
+  open: boolean
+  handleDeleteTournament: () => void
+}
 function ModalDeleteTournament({
   open,
   close,
-  handleDeleteTournament,
+  handleDeleteTournament
 }: ModalDeleteTournamentType) {
   if (open) {
     return (
@@ -29,8 +29,8 @@ function ModalDeleteTournament({
           </form>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalDeleteTournament;
+export default ModalDeleteTournament

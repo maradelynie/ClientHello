@@ -1,26 +1,27 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import * as api from "../../sevices";
-import "./style.scss";
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+import * as api from '../../sevices'
+import './style.scss'
 
 type ModalJogadorType = {
-  close: () => void;
-  getTournament?: () => void;
-  open: boolean;
-  player: jogadorType;
-  edit?: boolean;
-  setBackdropStatus?: (status: boolean) => void;
-  setMessageStatus?: (message: string) => void;
-};
+  close: () => void
+  getTournament?: () => void
+  open: boolean
+  player: jogadorType
+  edit?: boolean
+  setBackdropStatus?: (status: boolean) => void
+  setMessageStatus?: (message: string) => void
+}
 type jogadorType = {
-  name: string;
-  category: string;
-  average_speed: number;
-  dead: boolean;
-  times_played: number;
-  victories: number;
-  wos: number;
-};
+  name: string
+  category: string
+  average_speed: number
+  dead: boolean
+  times_played: number
+  victories: number
+  wos: number
+}
 function ModalJogador({
   open,
   close,
@@ -28,23 +29,23 @@ function ModalJogador({
   edit,
   getTournament,
   setBackdropStatus,
-  setMessageStatus,
+  setMessageStatus
 }: ModalJogadorType) {
-  const { id } = useParams();
-  const [playerData, setPlayerData] = useState(player);
+  const { id } = useParams()
+  const [playerData, setPlayerData] = useState(player)
   const handleSave = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (getTournament && setBackdropStatus && setMessageStatus) {
       try {
-        setBackdropStatus(true);
-        await api.putPlayer(playerData, id || "");
-        getTournament();
-        close();
+        setBackdropStatus(true)
+        await api.putPlayer(playerData, id || '')
+        getTournament()
+        close()
       } catch {
-        setMessageStatus("Erro ao editar jogador");
+        setMessageStatus('Erro ao editar jogador')
       }
     }
-  };
+  }
   if (open) {
     return (
       <div className="modalJogador-container">
@@ -58,10 +59,10 @@ function ModalJogador({
                   type="text"
                   id="name_viewPLayer"
                   required
-                  onChange={(e) =>
-                    setPlayerData((player) => ({
+                  onChange={e =>
+                    setPlayerData(player => ({
                       ...player,
-                      name: e.target.value,
+                      name: e.target.value
                     }))
                   }
                   value={playerData.name}
@@ -74,11 +75,11 @@ function ModalJogador({
                   <select
                     id="category_viewPLayer"
                     required
-                    onChange={(e) => {
-                      setPlayerData((player) => ({
+                    onChange={e => {
+                      setPlayerData(player => ({
                         ...player,
-                        category: e.target.value,
-                      }));
+                        category: e.target.value
+                      }))
                     }}
                     defaultValue={playerData.category}
                     disabled={!edit}
@@ -95,10 +96,10 @@ function ModalJogador({
                   id="average_viewPLayer"
                   type="text"
                   required
-                  onChange={(e) =>
-                    setPlayerData((player) => ({
+                  onChange={e =>
+                    setPlayerData(player => ({
                       ...player,
-                      average_speed: Number(e.target.value),
+                      average_speed: Number(e.target.value)
                     }))
                   }
                   value={playerData.average_speed}
@@ -111,13 +112,13 @@ function ModalJogador({
                   <select
                     id="dead_viewPLayer"
                     required
-                    onChange={(e) => {
-                      setPlayerData((player) => ({
+                    onChange={e => {
+                      setPlayerData(player => ({
                         ...player,
-                        dead: e.target.value === "sim",
-                      }));
+                        dead: e.target.value === 'sim'
+                      }))
                     }}
-                    defaultValue={playerData.dead ? "sim" : "nao"}
+                    defaultValue={playerData.dead ? 'sim' : 'nao'}
                     disabled={!edit}
                   >
                     <option value="sim">Sim</option>
@@ -131,10 +132,10 @@ function ModalJogador({
                   id="times_viewPLayer"
                   type="text"
                   required
-                  onChange={(e) =>
-                    setPlayerData((player) => ({
+                  onChange={e =>
+                    setPlayerData(player => ({
                       ...player,
-                      times_played: Number(e.target.value),
+                      times_played: Number(e.target.value)
                     }))
                   }
                   value={playerData.times_played}
@@ -147,10 +148,10 @@ function ModalJogador({
                   id="victories_viewPLayer"
                   type="text"
                   required
-                  onChange={(e) =>
-                    setPlayerData((player) => ({
+                  onChange={e =>
+                    setPlayerData(player => ({
                       ...player,
-                      victories: Number(e.target.value),
+                      victories: Number(e.target.value)
                     }))
                   }
                   value={playerData.victories}
@@ -163,10 +164,10 @@ function ModalJogador({
                   id="wos_viewPLayer"
                   type="text"
                   required
-                  onChange={(e) =>
-                    setPlayerData((player) => ({
+                  onChange={e =>
+                    setPlayerData(player => ({
                       ...player,
-                      wos: Number(e.target.value),
+                      wos: Number(e.target.value)
                     }))
                   }
                   value={playerData.wos}
@@ -186,7 +187,7 @@ function ModalJogador({
                 <button type="button" className="danger" onClick={close}>
                   cancelar
                 </button>
-                <button type="button" onClick={(e) => handleSave(e)}>
+                <button type="button" onClick={e => handleSave(e)}>
                   salvar
                 </button>
               </div>
@@ -194,8 +195,8 @@ function ModalJogador({
           </form>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalJogador;
+export default ModalJogador

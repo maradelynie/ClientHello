@@ -1,15 +1,16 @@
-import { useState } from "react";
-import * as api from "../../sevices";
-import "./style.scss";
+import { useState } from 'react'
+
+import * as api from '../../sevices'
+import './style.scss'
 
 type ModalCadastroJogadorType = {
-  close: () => void;
-  getTournament: () => void;
-  open: boolean;
-  tournamentId: string;
-  setBackdropStatus: (status: boolean) => void;
-  setMessageStatus: (message: string) => void;
-};
+  close: () => void
+  getTournament: () => void
+  open: boolean
+  tournamentId: string
+  setBackdropStatus: (status: boolean) => void
+  setMessageStatus: (message: string) => void
+}
 
 function ModalCadastroJogador({
   open,
@@ -17,21 +18,21 @@ function ModalCadastroJogador({
   tournamentId,
   getTournament,
   setBackdropStatus,
-  setMessageStatus,
+  setMessageStatus
 }: ModalCadastroJogadorType) {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("sem");
+  const [name, setName] = useState('')
+  const [category, setCategory] = useState('sem')
   const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      setBackdropStatus(true);
-      await api.postPlayer({ name: name, category }, tournamentId);
-      getTournament();
-      close();
+      setBackdropStatus(true)
+      await api.postPlayer({ name: name, category }, tournamentId)
+      getTournament()
+      close()
     } catch {
-      setMessageStatus("Erro ao cadastrar jogador");
+      setMessageStatus('Erro ao cadastrar jogador')
     }
-  };
+  }
   if (open) {
     return (
       <div className="modalCadastroJogador-container">
@@ -44,13 +45,13 @@ function ModalCadastroJogador({
               placeholder="Nome"
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
             />
             <div className="select-container">
               <select
                 required
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={e => setCategory(e.target.value)}
               >
                 <option value="sem">Sem Gênero</option>
                 <option value="fem">Feminino</option>
@@ -66,8 +67,8 @@ function ModalCadastroJogador({
           </form>
         </main>
       </div>
-    );
-  } else return <></>;
+    )
+  } else return <></>
 }
 
-export default ModalCadastroJogador;
+export default ModalCadastroJogador

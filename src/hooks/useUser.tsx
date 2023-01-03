@@ -1,38 +1,39 @@
-import { createContext, useContext, useState } from "react";
-import { UserType } from "../types/useUser";
+import { createContext, useContext, useState } from 'react'
+
+import { UserType } from '../types/useUser'
 
 type UserProps = {
-  children: JSX.Element;
-};
+  children: JSX.Element
+}
 
 type UseUserProps = {
-  user: UserType | false;
-  setupUser: (match: UserType) => void;
-  getToken: () => string;
-  logout: () => void;
-};
+  user: UserType | false
+  setupUser: (match: UserType) => void
+  getToken: () => string
+  logout: () => void
+}
 
 const UserContext = createContext<UseUserProps>({
   user: false,
   setupUser: () => {
-    return;
+    return
   },
   getToken: () => '',
   logout: () => {
-    return;
+    return
   }
-});
+})
 
 const UserProvider = ({ children }: UserProps) => {
   const [user, setUser] = useState<UserType | false>(false)
 
-  const setupUser = (newUser:UserType) => {
+  const setupUser = (newUser: UserType) => {
     sessionStorage.setItem('tokenHello', newUser.token)
     setUser(newUser)
   }
 
   const getToken = () => {
-    if(user) return user.token
+    if (user) return user.token
     else return ''
   }
 
@@ -52,12 +53,12 @@ const UserProvider = ({ children }: UserProps) => {
     >
       {children}
     </UserContext.Provider>
-  );
-};
-
-function useUser() {
-  const context = useContext(UserContext);
-  return context;
+  )
 }
 
-export { UserProvider, useUser };
+function useUser() {
+  const context = useContext(UserContext)
+  return context
+}
+
+export { UserProvider, useUser }

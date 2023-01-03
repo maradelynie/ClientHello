@@ -1,16 +1,16 @@
-import './style.scss'
-
-import * as api from '../../sevices'
-import Contador from '../../components/Contador'
 import { useEffect, useState } from 'react'
-import ModalStart from '../../components/ModalStart/index'
-import ModalCount from '../../components/ModalCount/index'
-import { io } from 'socket.io-client'
-import { useMatch } from '../../hooks/useMatch'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Backdrop from '../../components/backdrop'
+import { io } from 'socket.io-client'
+
 import Alert from '../../components/alert'
+import Backdrop from '../../components/backdrop'
+import Contador from '../../components/Contador'
+import ModalCount from '../../components/ModalCount/index'
+import ModalStart from '../../components/ModalStart/index'
+import { useMatch } from '../../hooks/useMatch'
+import * as api from '../../sevices'
 import { RacerType } from '../../types/useMatch'
+import './style.scss'
 
 const APIURLSOCKET =
   process.env.REACT_APP_APIURLSOCKET || 'http://localhost:3008'
@@ -54,7 +54,7 @@ function Home() {
     }
   }
   const startCountDown = async () =>
-    await new Promise<void>((resolve, reject) => {
+    await new Promise<void>(resolve => {
       const count = setInterval(() => {
         setCountDown(actual => {
           const newValue = actual - 1

@@ -1,19 +1,20 @@
-import { createContext, useContext, useState } from "react";
-import Alert from "../components/alert";
+import { createContext, useContext, useState } from 'react'
+
+import Alert from '../components/alert'
 
 type AlertProps = {
-  children: JSX.Element;
-};
+  children: JSX.Element
+}
 
 type UseAlertProps = {
-  setupMessage: (value: string) => void;
-};
+  setupMessage: (value: string) => void
+}
 
 const AlertContext = createContext<UseAlertProps>({
   setupMessage: () => {
-    return;
+    return
   }
-});
+})
 
 const AlertProvider = ({ children }: AlertProps) => {
   const [message, setMessage] = useState<string>('')
@@ -21,7 +22,7 @@ const AlertProvider = ({ children }: AlertProps) => {
   const handleClose = () => {
     setMessage('')
   }
-  const setupMessage = (value:string) => {
+  const setupMessage = (value: string) => {
     setMessage(value)
   }
 
@@ -31,15 +32,15 @@ const AlertProvider = ({ children }: AlertProps) => {
         setupMessage
       }}
     >
-      <Alert open={!!message} message={message} close={handleClose}/>
+      <Alert open={!!message} message={message} close={handleClose} />
       {children}
     </AlertContext.Provider>
-  );
-};
-
-function useAlert() {
-  const context = useContext(AlertContext);
-  return context;
+  )
 }
 
-export { AlertProvider, useAlert };
+function useAlert() {
+  const context = useContext(AlertContext)
+  return context
+}
+
+export { AlertProvider, useAlert }

@@ -1,32 +1,34 @@
-import { useEffect, useState } from "react";
-import ModalWin from "../ModalWin";
-import "./style.scss";
-type RacerType = {
-  id: string | null;
-  name: string;
-  average_speed: number;
-  wos: number;
-  times_played: number;
-  victories: number;
-  category: string;
-  tournament?: string;
-  dead: boolean;
-  key?: string;
-};
-type ContadorType = {
-  p1: RacerType;
-  p2: RacerType;
-  p1Pulse: number;
-  p2Pulse: number;
-  actualTime: number;
-  quickPlayMode: boolean;
-  handleRestart: () => void;
-  setStartTimer: (status: boolean) => void;
-  handleFinishMatch: (p1: RacerType, p2: RacerType, winner: string) => void;
-};
-const TIRESIZE = process.env.REACT_APP_TIRESIZE || 2096;
+import { useEffect, useState } from 'react'
 
-const TOTALDIST = Number(process.env.REACT_APP_TOTALDIST || 500);
+import ModalWin from '../ModalWin'
+import './style.scss'
+
+type RacerType = {
+  id: string | null
+  name: string
+  average_speed: number
+  wos: number
+  times_played: number
+  victories: number
+  category: string
+  tournament?: string
+  dead: boolean
+  key?: string
+}
+type ContadorType = {
+  p1: RacerType
+  p2: RacerType
+  p1Pulse: number
+  p2Pulse: number
+  actualTime: number
+  quickPlayMode: boolean
+  handleRestart: () => void
+  setStartTimer: (status: boolean) => void
+  handleFinishMatch: (p1: RacerType, p2: RacerType, winner: string) => void
+}
+const TIRESIZE = process.env.REACT_APP_TIRESIZE || 2096
+
+const TOTALDIST = Number(process.env.REACT_APP_TOTALDIST || 500)
 
 function Contador({
   p1,
@@ -37,37 +39,37 @@ function Contador({
   quickPlayMode,
   actualTime,
   handleRestart,
-  handleFinishMatch,
+  handleFinishMatch
 }: ContadorType) {
-  const [meterP1, setMeterP1] = useState(0);
-  const [meterP2, setMeterP2] = useState(0);
-  const [speedP1, setSpeedP1] = useState(0);
-  const [speedP2, setSpeedP2] = useState(0);
-  const [p1Winning, setP1Winning] = useState(false);
+  const [meterP1, setMeterP1] = useState(0)
+  const [meterP2, setMeterP2] = useState(0)
+  const [speedP1, setSpeedP1] = useState(0)
+  const [speedP2, setSpeedP2] = useState(0)
+  const [p1Winning, setP1Winning] = useState(false)
 
-  const [winner, setWinner] = useState<RacerType | "">("");
-  const [winnerSpeed, setWinnerSpeed] = useState(0);
+  const [winner, setWinner] = useState<RacerType | ''>('')
+  const [winnerSpeed, setWinnerSpeed] = useState(0)
 
   const showDistance = (pulse: number) => {
-    const meter = (pulse * Number(TIRESIZE)) / 1000;
-    return Math.round(meter);
-  };
+    const meter = (pulse * Number(TIRESIZE)) / 1000
+    return Math.round(meter)
+  }
   const showPercentage = (total: number, actual: number) => {
-    const percentage = (actual * 100) / total;
-    return percentage;
-  };
+    const percentage = (actual * 100) / total
+    return percentage
+  }
   const showSpeed = (pulse: number) => {
-    const dist = showDistance(pulse) / 1000;
-    const hour = actualTime / 3600000;
-    return Math.round(dist / hour || 0.001);
-  };
+    const dist = showDistance(pulse) / 1000
+    const hour = actualTime / 3600000
+    return Math.round(dist / hour || 0.001)
+  }
   const startWin = (player: RacerType) => {
-    setWinner(player);
-    setStartTimer(false);
-  };
+    setWinner(player)
+    setStartTimer(false)
+  }
   const closeWinner = () => {
-    setWinner("");
-  };
+    setWinner('')
+  }
   const handleSave = () => {
     if (winner) {
       const newPlayerA = {
@@ -76,49 +78,49 @@ function Contador({
         times_played: p1.times_played + 1,
         average_speed: p1.average_speed > speedP1 ? p1.average_speed : speedP1,
         victories: p1.key === winner.key ? p1.victories + 1 : p1.victories,
-        dead: p1.key === winner.id ? false : true,
-      };
+        dead: p1.key === winner.id ? false : true
+      }
       const newPlayerB = {
         ...p2,
         id: null,
         times_played: p2.times_played + 1,
         average_speed: p2.average_speed > speedP2 ? p2.average_speed : speedP2,
         victories: p2.key === winner.key ? p2.victories + 1 : p2.victories,
-        dead: p2.key === winner.key ? false : true,
-      };
-      handleFinishMatch(newPlayerA, newPlayerB, winner.key || "");
+        dead: p2.key === winner.key ? false : true
+      }
+      handleFinishMatch(newPlayerA, newPlayerB, winner.key || '')
     }
-  };
+  }
 
   useEffect(() => {
-    const p1Distance = showDistance(p1Pulse);
-    const p2Distance = showDistance(p2Pulse);
-    const p1Speed = showSpeed(p1Pulse);
-    const p2Speed = showSpeed(p2Pulse);
+    const p1Distance = showDistance(p1Pulse)
+    const p2Distance = showDistance(p2Pulse)
+    const p1Speed = showSpeed(p1Pulse)
+    const p2Speed = showSpeed(p2Pulse)
 
     if (p1Distance > p2Distance) {
-      setP1Winning(true);
-    } else setP1Winning(false);
+      setP1Winning(true)
+    } else setP1Winning(false)
     if (p1Distance >= TOTALDIST) {
-      setSpeedP1(p1Speed);
-      setWinnerSpeed(p1Speed);
-      return startWin(p1);
+      setSpeedP1(p1Speed)
+      setWinnerSpeed(p1Speed)
+      return startWin(p1)
     } else if (p2Distance >= TOTALDIST) {
-      setSpeedP2(p2Speed);
-      setWinnerSpeed(p2Speed);
-      return startWin(p2);
+      setSpeedP2(p2Speed)
+      setWinnerSpeed(p2Speed)
+      return startWin(p2)
     } else if (actualTime) {
-      setSpeedP1(p1Speed);
-      setSpeedP2(p2Speed);
-      setMeterP1(p1Distance);
-      setMeterP2(p2Distance);
+      setSpeedP1(p1Speed)
+      setSpeedP2(p2Speed)
+      setMeterP1(p1Distance)
+      setMeterP2(p2Distance)
     } else {
-      setSpeedP1(0);
-      setSpeedP2(0);
-      setMeterP1(0);
-      setMeterP2(0);
+      setSpeedP1(0)
+      setSpeedP2(0)
+      setMeterP1(0)
+      setMeterP2(0)
     }
-  }, [p1Pulse, p2Pulse, actualTime]);
+  }, [p1Pulse, p2Pulse, actualTime])
 
   return (
     <div className="contador-container">
@@ -145,8 +147,8 @@ function Contador({
               <div
                 className={
                   p1Winning
-                    ? "contador-bar distance front"
-                    : "contador-bar distance"
+                    ? 'contador-bar distance front'
+                    : 'contador-bar distance'
                 }
                 style={{ height: `${showPercentage(TOTALDIST, meterP1)}%` }}
               >
@@ -178,7 +180,7 @@ function Contador({
         <></>
       )}
     </div>
-  );
+  )
 }
 
-export default Contador;
+export default Contador
