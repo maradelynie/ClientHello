@@ -3,7 +3,7 @@ import axios from 'axios'
 const APIURL = process.env.REACT_APP_APIURL
 const APITOKEN = process.env.REACT_APP_APITOKEN
 
-export const sendWithAxios = async (rota:string, method:string, payload?:any) => {
+export const sendWithAxios = async (rota:string, method:string, payload?:any, header?:any) => {
   const token = sessionStorage.getItem('tokenHello')
     const result = await axios({
       url: "http://localhost:3008"+"/"+rota,
@@ -11,8 +11,7 @@ export const sendWithAxios = async (rota:string, method:string, payload?:any) =>
       data: payload,
       headers: token?{
         authorization: token || ''
-      }:{},
+      }:header?{...header}:{},
     })
-    console.log(result)
     return result
 }

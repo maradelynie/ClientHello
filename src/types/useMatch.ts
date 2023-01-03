@@ -20,8 +20,11 @@ export type RacerType = {
 };
 export type TournamentType = {
   id: number;
-  name: string;
-  date: string;
+  title: string;
+  name: string; //delete
+  createdAt: string;
+  updatedAt: string;
+  date: string; // delete
   racers: RacerType[];
 };
 export type KeysType = {
