@@ -31,7 +31,6 @@ export const login = async ({ email, password }: CredentialsType) => {
     throw new Error("erro ao logar");
   }
 };
-
 export const getTorunaments = async () => {
   const response = await apiConfig.sendWithAxios(
     "tournaments",
@@ -50,7 +49,6 @@ export const getTorunament = async (id: string) => {
     throw new Error("erro ao obter torneios");
   }
 };
-
 export const postTorunaments = async (dataTournament: TorneioCreateType) => {
   try {
     const response = await apiConfig.sendWithAxios(
@@ -76,13 +74,13 @@ export const deletTorunaments = async (id: string) => {
     throw new Error("erro ao deletar torneio");
   }
 };
+
 export const postPlayer = async (dataPlayer: PlayerCreateType, id: string) => {
   try {
-    const response = await apiConfig.sendWithAxiosNoCode(
-      "92lifkj4demkm16tk5jc3vaj78pdmawx",
+    const response = await apiConfig.sendWithAxios(
+      "racers",
       "POST",
-      { player: dataPlayer },
-      { tournament: id }
+      { ...dataPlayer, TournamentId: id },
     );
     return response.data;
   } catch {
