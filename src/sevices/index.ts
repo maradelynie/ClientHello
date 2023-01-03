@@ -42,10 +42,8 @@ export const getTorunaments = async () => {
 export const getTorunament = async (id: string) => {
   try {
     const response = await apiConfig.sendWithAxios(
-      "r2mvt1f6wludndkivtq06upimbz97aah",
-      "GET",
-      null,
-      { tournament: id }
+      `tournaments/${id}`,
+      "GET"
     );
     return response.data;
   } catch {

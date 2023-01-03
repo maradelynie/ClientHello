@@ -1,115 +1,113 @@
-import "./style.scss";
-import React, { useEffect, useState } from "react";
-import * as api from "../../sevices";
-import { Edit, Frown, Play, Trash, UserPlus } from "react-feather";
-import { useNavigate, useParams } from "react-router-dom";
-import ModalCadastroJogador from "../../components/ModalCadastroJogador";
-import ModalJogador from "../../components/ModalJogador";
-import ModalDeleteJogador from "../../components/ModalDeleteJogador";
-import Backdrop from "../../components/backdrop";
-import Alert from "../../components/alert";
-import ModalDeleteTournament from "../../components/ModalDeleteTournament";
-import { useMatch } from "../../hooks/useMatch";
+import './style.scss'
+import React, { useEffect, useState } from 'react'
+import * as api from '../../sevices'
+import { Edit, Frown, Play, Trash, UserPlus } from 'react-feather'
+import { useNavigate, useParams } from 'react-router-dom'
+import ModalCadastroJogador from '../../components/ModalCadastroJogador'
+import ModalJogador from '../../components/ModalJogador'
+import ModalDeleteJogador from '../../components/ModalDeleteJogador'
+import Backdrop from '../../components/backdrop'
+import Alert from '../../components/alert'
+import ModalDeleteTournament from '../../components/ModalDeleteTournament'
+import { useMatch } from '../../hooks/useMatch'
 
 type ReacersType = {
-  average_speed: number;
-  category: string;
-  id: number;
-  key: string;
-  name: string;
-  times_played: number;
-  victories: number;
-  dead: boolean;
-  wos: number;
-};
+  average_speed: number
+  category: string
+  id: number
+  key: string
+  name: string
+  times_played: number
+  victories: number
+  dead: boolean
+  wos: number
+}
 
 function Tournament() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { setupPlayers, tournament, setupTournament } = useMatch();
-  const [backdropStatus, setBackdropStatus] = useState(true);
-  const [semPlayers, setSemPlayers] = useState<ReacersType[] | []>([]);
-  const [femPlayers, setFemPlayers] = useState<ReacersType[] | []>([]);
-  const [masPlayers, setMascPlayers] = useState<ReacersType[] | []>([]);
-  const [viewPlayerData, setViewPlayerData] = useState<ReacersType | "">("");
-  const [editPlayerData, setEditPlayerData] = useState<ReacersType | "">("");
-  const [deletePlayerData, setDeletePlayerData] = useState<ReacersType | "">(
-    ""
-  );
-  const [modalCadastroJogador, setModalCadastroJogador] = useState(false);
-  const [modalDeleteTournament, setModalDeleteTournament] = useState(false);
-  const [messageStatus, setMessageStatus] = useState("");
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { setupPlayers, tournament, setupTournament } = useMatch()
+  const [backdropStatus, setBackdropStatus] = useState(true)
+  const [semPlayers, setSemPlayers] = useState<ReacersType[] | []>([])
+  const [femPlayers, setFemPlayers] = useState<ReacersType[] | []>([])
+  const [masPlayers, setMascPlayers] = useState<ReacersType[] | []>([])
+  const [viewPlayerData, setViewPlayerData] = useState<ReacersType | ''>('')
+  const [editPlayerData, setEditPlayerData] = useState<ReacersType | ''>('')
+  const [deletePlayerData, setDeletePlayerData] = useState<ReacersType | ''>('')
+  const [modalCadastroJogador, setModalCadastroJogador] = useState(false)
+  const [modalDeleteTournament, setModalDeleteTournament] = useState(false)
+  const [messageStatus, setMessageStatus] = useState('')
 
   const getTournament = async () => {
     try {
-      setBackdropStatus(true);
-      const tournament = await api.getTorunament(id || "");
-      setupTournament(tournament);
-      setupPlayers(tournament.racers);
+      setBackdropStatus(true)
+      const tournament = await api.getTorunament(id || '')
+      setupTournament(tournament)
+      setupPlayers(tournament.racers)
       setSemPlayers(
         tournament.racers.filter(
-          (player: ReacersType) => player.category === "sem"
+          (player: ReacersType) => player.category === 'sem'
         )
-      );
+      )
       setFemPlayers(
         tournament.racers.filter(
-          (player: ReacersType) => player.category === "fem"
+          (player: ReacersType) => player.category === 'fem'
         )
-      );
+      )
       setMascPlayers(
         tournament.racers.filter(
-          (player: ReacersType) => player.category === "mas"
+          (player: ReacersType) => player.category === 'mas'
         )
-      );
+      )
     } catch {
-      setMessageStatus("Erro ao carregar torneios");
+      setMessageStatus('Erro ao carregar torneios')
     } finally {
-      setBackdropStatus(false);
+      setBackdropStatus(false)
     }
-  };
+  }
   const handleGotToTOurnament = async (
     category: string,
     players: ReacersType[]
   ) => {
     if (players.length > 1) {
-      navigate(`/keys/${category}/${id}`);
-    } else setMessageStatus("Adicione mais jogadores ao torneio");
-  };
+      navigate(`/keys/${category}/${id}`)
+    } else setMessageStatus('Adicione mais jogadores ao torneio')
+  }
   const handleEdit = (
     e: React.MouseEvent<SVGElement, MouseEvent>,
     player: ReacersType
   ) => {
-    e.stopPropagation();
-    setEditPlayerData(player);
-  };
+    e.stopPropagation()
+    setEditPlayerData(player)
+  }
   const handleDelete = (
     e: React.MouseEvent<SVGElement, MouseEvent>,
     player: ReacersType
   ) => {
-    e.stopPropagation();
-    setDeletePlayerData(player);
-  };
+    e.stopPropagation()
+    setDeletePlayerData(player)
+  }
   const handleDeleteTournament = async () => {
     try {
-      setBackdropStatus(true);
-      await api.deletTorunaments(id || "");
-      navigate("/load");
+      setBackdropStatus(true)
+      await api.deletTorunaments(id || '')
+      navigate('/load')
     } catch {
-      setMessageStatus("Erro ao deletar torneios");
+      setMessageStatus('Erro ao deletar torneios')
     } finally {
-      setBackdropStatus(false);
+      setBackdropStatus(false)
     }
-  };
+  }
   useEffect(() => {
-    getTournament();
+    getTournament()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <div className="tournament_container">
       <Alert
         open={!!messageStatus}
-        close={() => setMessageStatus("")}
+        close={() => setMessageStatus('')}
         message={messageStatus}
       />
       <Backdrop open={backdropStatus} />
@@ -127,7 +125,7 @@ function Tournament() {
           {!!deletePlayerData ? (
             <ModalDeleteJogador
               open={!!deletePlayerData}
-              close={() => setDeletePlayerData("")}
+              close={() => setDeletePlayerData('')}
               player={deletePlayerData}
               getTournament={getTournament}
               setBackdropStatus={setBackdropStatus}
@@ -139,7 +137,7 @@ function Tournament() {
           {!!editPlayerData ? (
             <ModalJogador
               open={!!editPlayerData}
-              close={() => setEditPlayerData("")}
+              close={() => setEditPlayerData('')}
               player={editPlayerData}
               edit={true}
               getTournament={getTournament}
@@ -152,7 +150,7 @@ function Tournament() {
           {!!viewPlayerData ? (
             <ModalJogador
               open={!!viewPlayerData}
-              close={() => setViewPlayerData("")}
+              close={() => setViewPlayerData('')}
               player={viewPlayerData}
             />
           ) : (
@@ -162,7 +160,7 @@ function Tournament() {
             <ModalCadastroJogador
               open={modalCadastroJogador}
               close={() => setModalCadastroJogador(false)}
-              tournamentId={id || ""}
+              tournamentId={id || ''}
               setBackdropStatus={setBackdropStatus}
               getTournament={getTournament}
               setMessageStatus={setMessageStatus}
@@ -173,8 +171,8 @@ function Tournament() {
 
           <header>
             <section className="small">
-              <h2>{tournament.name}</h2>
-              <span>{new Date(tournament.date).toLocaleDateString()}</span>
+              <h2>{tournament.title}</h2>
+              <span>{new Date(tournament.createdAt).toLocaleDateString()}</span>
             </section>
             <nav>
               <div
@@ -198,9 +196,9 @@ function Tournament() {
                   <header>
                     <h3>Sem gênero</h3>
                     <div
-                      onClick={() => handleGotToTOurnament("sem", semPlayers)}
+                      onClick={() => handleGotToTOurnament('sem', semPlayers)}
                       className={
-                        semPlayers.length > 1 ? "button" : "button unClicable"
+                        semPlayers.length > 1 ? 'button' : 'button unClicable'
                       }
                     >
                       <Play />
@@ -215,33 +213,33 @@ function Tournament() {
                         <h5>
                           <div>
                             <h3>{index + 1}</h3>
-                            {"| "}
-                            {player.dead ? <Frown size={14} /> : ""}{" "}
+                            {'| '}
+                            {player.dead ? <Frown size={14} /> : ''}{' '}
                             {player.name}
-                          </div>{" "}
+                          </div>{' '}
                           <nav>
                             <Trash
-                              onClick={(e) => handleDelete(e, player)}
+                              onClick={e => handleDelete(e, player)}
                               className="icon"
-                            />{" "}
+                            />{' '}
                             <Edit
-                              onClick={(e) => handleEdit(e, player)}
+                              onClick={e => handleEdit(e, player)}
                               className="icon"
                             />
                           </nav>
                         </h5>
                         <hr></hr>
                       </li>
-                    );
+                    )
                   })}
                 </ul>
                 <ul className="card">
                   <header>
                     <h3>Feminino</h3>
                     <div
-                      onClick={() => handleGotToTOurnament("fem", femPlayers)}
+                      onClick={() => handleGotToTOurnament('fem', femPlayers)}
                       className={
-                        femPlayers.length > 1 ? "button" : "button unClicable"
+                        femPlayers.length > 1 ? 'button' : 'button unClicable'
                       }
                     >
                       <Play />
@@ -256,33 +254,33 @@ function Tournament() {
                         <h5>
                           <div>
                             <h3>{index + 1}</h3>
-                            {"| "}
-                            {player.dead ? <Frown size={14} /> : ""}{" "}
+                            {'| '}
+                            {player.dead ? <Frown size={14} /> : ''}{' '}
                             {player.name}
-                          </div>{" "}
+                          </div>{' '}
                           <nav>
                             <Trash
-                              onClick={(e) => handleDelete(e, player)}
+                              onClick={e => handleDelete(e, player)}
                               className="icon"
-                            />{" "}
+                            />{' '}
                             <Edit
-                              onClick={(e) => handleEdit(e, player)}
+                              onClick={e => handleEdit(e, player)}
                               className="icon"
                             />
                           </nav>
                         </h5>
                         <hr></hr>
                       </li>
-                    );
+                    )
                   })}
                 </ul>
                 <ul className="card">
                   <header>
                     <h3>Masculino</h3>
                     <div
-                      onClick={() => handleGotToTOurnament("mas", masPlayers)}
+                      onClick={() => handleGotToTOurnament('mas', masPlayers)}
                       className={
-                        masPlayers.length > 1 ? "button" : "button unClicable"
+                        masPlayers.length > 1 ? 'button' : 'button unClicable'
                       }
                     >
                       <Play />
@@ -297,24 +295,24 @@ function Tournament() {
                         <h5>
                           <div>
                             <h3>{index + 1}</h3>
-                            {"| "}
-                            {player.dead ? <Frown size={14} /> : ""}{" "}
+                            {'| '}
+                            {player.dead ? <Frown size={14} /> : ''}{' '}
                             {player.name}
-                          </div>{" "}
+                          </div>{' '}
                           <nav>
                             <Trash
-                              onClick={(e) => handleDelete(e, player)}
+                              onClick={e => handleDelete(e, player)}
                               className="icon"
-                            />{" "}
+                            />{' '}
                             <Edit
-                              onClick={(e) => handleEdit(e, player)}
+                              onClick={e => handleEdit(e, player)}
                               className="icon"
                             />
                           </nav>
                         </h5>
                         <hr></hr>
                       </li>
-                    );
+                    )
                   })}
                 </ul>
               </>
@@ -327,7 +325,7 @@ function Tournament() {
         <></>
       )}
     </div>
-  );
+  )
 }
 
-export default Tournament;
+export default Tournament
