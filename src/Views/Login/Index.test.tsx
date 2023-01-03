@@ -5,10 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import { BackdropProvider } from '../../hooks/useBackdrop'
 import { AlertProvider } from '../../hooks/useAlert'
-<<<<<<< HEAD
 const originalEnv = process.env
-=======
->>>>>>> b811037037ecd8c88dd6fed7c3eecc7553d2eb3c
 
 const mockedUsedNavigate = jest.fn()
 
